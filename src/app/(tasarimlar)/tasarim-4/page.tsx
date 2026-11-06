@@ -202,7 +202,7 @@ export default function Yayin() {
           <nav className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-[#3a3a3a] pt-5 text-[13px] text-[#d0d0d0]">
             {["Kullanım şartları", "Gizlilik", "Çerezler", "İletişim", "RSS"].map((n) => <a key={n} href="#" className="hover:underline">{n}</a>)}
           </nav>
-          <p className="mt-5 text-[12px] text-[#9a9a9a]">© 2026 Çetiner Çetin. Görseller ve rakamlar temsilîdir.</p>
+          <p className="mt-5 text-[12px] text-[#9a9a9a]">© 2026 Çetiner Çetin</p>
         </div>
       </footer>
     </div>

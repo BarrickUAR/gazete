@@ -28,8 +28,13 @@ export const author = {
   today: "6 Kasım 2026, Cuma",
 };
 
-export function img(seed: string, w = 1200, h = 800, gray = false) {
-  return `https://picsum.photos/seed/${seed}/${w}/${h}${gray ? "?grayscale" : ""}`;
+// Görseller Wikimedia Commons'tan (özgür lisans) — kaynaklar: public/img/credits.json
+// w/h/gray parametreleri eski imza uyumluluğu için; boyutlandırma CSS ile yapılıyor.
+export function img(seed: string, _w?: number, _h?: number, _gray?: boolean) {
+  void _w;
+  void _h;
+  void _gray;
+  return `/img/${seed}.jpg`;
 }
 
 export const lead: Article = {

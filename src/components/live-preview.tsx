@@ -19,7 +19,7 @@ export function LivePreview({ src, title }: { src: string; title: string }) {
   }, []);
 
   return (
-    <div ref={box} className="relative aspect-[16/10] w-full overflow-hidden bg-[#e7e4dd]">
+    <div ref={box} className="relative aspect-[16/10] w-full overflow-hidden bg-[#1c1c1a]">
       {scale > 0 && (
         <iframe
           src={src}

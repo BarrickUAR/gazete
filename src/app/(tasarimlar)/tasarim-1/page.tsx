@@ -28,7 +28,7 @@ function Meta({ a }: { a: { date: string; readMin: number } }) {
 }
 
 export default function Gazete() {
-  const [a1, a2, a3, a4, a5, a6] = articles;
+  const [a1, a2, a3, a4, a5] = articles;
   return (
     <div className={`${mast.variable} ${serif.variable} ${sans.variable} ${S} bg-white text-[#121212]`}>
       {/* üst şerit */}
@@ -202,7 +202,6 @@ export default function Gazete() {
             ))}
           </div>
         </section>
-        <p className={`${F} mt-2 text-[10px] text-[#999]`}>{a6 && "Rakamlar ve görseller temsilîdir."}</p>
       </main>
 
       <footer className={`${F} border-t border-[#121212] bg-white`}>

@@ -184,7 +184,7 @@ export default function Portfolyo() {
 
           <footer className="mt-16 flex flex-col justify-between gap-2 border-t pt-5 text-[12.5px] sm:flex-row" style={{ borderColor: LINE, color: MUTED }}>
             <span>© 2026 Çetiner Çetin</span>
-            <span>Görseller ve rakamlar temsilîdir.</span>
+            <span>X · YouTube · RSS</span>
           </footer>
         </main>
       </div>
