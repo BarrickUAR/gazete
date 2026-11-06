@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Barlow } from "next/font/google";
+import { Archivo } from "next/font/google";
 import { LiveClock } from "@/components/live-clock";
 import { author, lead, articles, appearances, dossiers, img } from "@/lib/mock";
 
-const cond = Barlow_Condensed({ subsets: ["latin", "latin-ext"], weight: ["500", "600", "700", "800"], variable: "--f-bc" });
-const barlow = Barlow({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600"], variable: "--f-b" });
+// Sky News / CNN ekran grafikleri: tek aile Archivo — alt bant, ticker ve başlıklarda dar genişlik (wdth 70), gövdede normal
+const archivo = Archivo({ subsets: ["latin", "latin-ext"], axes: ["wdth"], variable: "--f-arc" });
 
 export const metadata: Metadata = { title: "Tasarım 6 · Yayın Stüdyosu — Çetiner Çetin" };
 
-const C = "font-[family-name:var(--f-bc)] uppercase";
+const C = "font-[family-name:var(--f-arc)] uppercase [font-stretch:70%]";
 const RED = "#e5141b";
 const AMBER = "#ffc21a";
 const NAVY = "#070f1e";
@@ -40,7 +40,7 @@ export default function Studyo() {
   ];
 
   return (
-    <div className={`${cond.variable} ${barlow.variable} font-[family-name:var(--f-b)] min-h-screen text-white`} style={{ background: NAVY }}>
+    <div className={`${archivo.variable} font-[family-name:var(--f-arc)] antialiased min-h-screen text-white`} style={{ background: NAVY }}>
       {/* kanal çubuğu */}
       <header className="border-b border-white/10">
         <div className="mx-auto flex max-w-[1360px] items-center justify-between px-5 py-3.5 lg:px-8">
@@ -74,23 +74,28 @@ export default function Studyo() {
             <div className={`${C} absolute right-4 top-4 bg-black/70 px-2.5 py-1 text-[15px] font-semibold tracking-[0.08em]`}>
               <LiveClock seconds={false} />
             </div>
-            <a href="#" className="absolute left-1/2 top-1/2 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 border-white/80 bg-black/30 transition-colors duration-150 hover:bg-white hover:text-black" aria-label="İzle">
+            <a href="#" className="absolute left-1/2 top-1/2 hidden h-20 w-20 sm:grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 border-white/80 bg-black/30 transition-colors duration-150 hover:bg-white hover:text-black" aria-label="İzle">
               <Play className="h-8 w-8" />
             </a>
             {/* alt bant */}
             <div className="absolute bottom-5 left-0 right-6 sm:bottom-8 sm:right-auto sm:max-w-[80%]">
               <div className="flex items-stretch">
-                <span className={`${C} flex items-center px-3 text-[13px] font-bold tracking-[0.1em] sm:px-4 sm:text-[15px]`} style={{ background: RED }}>Özel</span>
-                <span className={`${C} bg-white px-3 py-1.5 text-[22px] font-bold leading-none text-[#070f1e] sm:px-4 sm:py-2 sm:text-[34px]`}>Seçim sonrası dış politika</span>
+                <span className={`${C} flex items-center px-3 text-[13px] font-extrabold tracking-[0.1em] sm:px-4 sm:text-[16px]`} style={{ background: RED }}>Özel</span>
+                <span className={`${C} bg-white px-3 py-1.5 text-[24px] font-extrabold leading-none tracking-[-0.005em] text-[#070f1e] sm:px-4 sm:py-2.5 sm:text-[38px]`}>Seçim sonrası dış politika</span>
               </div>
-              <div className={`${C} inline-block px-3 py-1 text-[13px] font-bold tracking-[0.06em] text-[#070f1e] sm:px-4 sm:text-[16px]`} style={{ background: AMBER }}>
-                {author.name} · Dış Politika Koordinatörü
+              <div className="flex items-stretch">
+                <span className={`${C} px-3 py-1 text-[13px] font-bold tracking-[0.04em] sm:px-4 sm:py-1.5 sm:text-[17px]`} style={{ background: "#13254a" }}>
+                  {author.name}
+                </span>
+                <span className={`${C} hidden items-center bg-[#0b1630] px-3 text-[13px] font-medium tracking-[0.04em] text-white/75 sm:flex sm:text-[15px]`}>
+                  Dış Politika Koordinatörü · {author.outlet}
+                </span>
               </div>
             </div>
           </div>
           {/* son dakika */}
           <div className="flex items-stretch overflow-hidden bg-white text-[#070f1e]">
-            <span className={`${C} z-10 flex shrink-0 items-center px-4 text-[16px] font-extrabold tracking-[0.06em] text-white`} style={{ background: RED }}>Son dakika</span>
+            <span className={`${C} z-10 flex shrink-0 items-center px-4 text-[17px] font-extrabold tracking-[0.04em] text-[#070f1e]`} style={{ background: AMBER }}>Son dakika</span>
             <div className="min-w-0 flex-1 overflow-hidden py-2">
               <div className="marquee">
                 {[...ticker, ...ticker].map((t, i) => (
@@ -121,7 +126,7 @@ export default function Studyo() {
               </li>
             ))}
           </ol>
-          <a href="#" className={`${C} flex items-center justify-between px-5 py-4 text-[16px] font-bold tracking-[0.06em] text-[#070f1e]`} style={{ background: AMBER }}>
+          <a href="#" className={`${C} flex items-center justify-between bg-white px-5 py-4 text-[17px] font-bold tracking-[0.04em] text-[#070f1e] transition-colors hover:bg-[#e6e9ef]`}>
             Tüm yayın arşivi <span aria-hidden>→</span>
           </a>
         </aside>
@@ -142,7 +147,7 @@ export default function Studyo() {
                 <span className="absolute bottom-0 left-0 h-[3px]" style={{ background: RED, width: `${[100, 64, 100, 22][i]}%` }} />
               </div>
               <div className="p-4">
-                <p className={`${C} text-[13px] font-semibold tracking-[0.08em]`} style={{ color: AMBER }}>{e.program} · {e.ep}</p>
+                <p className={`${C} text-[13px] font-semibold tracking-[0.06em] text-white/55`}>{e.program} · {e.ep}</p>
                 <p className={`${C} mt-1.5 text-[22px] font-bold leading-[1.05] group-hover:underline`}>{e.topic}</p>
                 <p className="mt-2 text-[13px] text-white/50">{e.date} 2026</p>
               </div>
@@ -170,7 +175,7 @@ export default function Studyo() {
                 <a href={a.url} className="group grid grid-cols-[96px_1fr] gap-4 border-b border-white/10 py-4 first:pt-0 sm:grid-cols-[140px_1fr]">
                   <img src={img(a.img, 300, 200)} alt="" className="aspect-[3/2] w-full object-cover" />
                   <span>
-                    <span className={`${C} block text-[13px] font-bold tracking-[0.08em]`} style={{ color: AMBER }}>{a.kind} · {a.date}</span>
+                    <span className={`${C} block text-[13px] font-semibold tracking-[0.06em] text-white/55`}>{a.kind} · {a.date}</span>
                     <span className={`${C} mt-1 block text-[21px] font-bold leading-[1.08] group-hover:underline`}>{a.title}</span>
                   </span>
                 </a>
@@ -195,8 +200,8 @@ export default function Studyo() {
       {/* muhabir */}
       <section className="mx-auto grid max-w-[1360px] items-center gap-10 px-5 py-16 lg:grid-cols-12 lg:px-8">
         <div className="lg:col-span-7">
-          <p className={`${C} text-[14px] font-bold tracking-[0.1em]`} style={{ color: AMBER }}>Muhabir</p>
-          <h2 className={`${C} mt-2 text-[64px] font-extrabold leading-[0.9] sm:text-[88px]`}>{author.name}</h2>
+          <p className={`${C} text-[15px] font-bold tracking-[0.08em]`} style={{ color: RED }}>Muhabir</p>
+          <h2 className={`${C} mt-2 text-[64px] font-extrabold leading-[0.88] sm:text-[104px]`}>{author.name}</h2>
           <p className={`${C} mt-3 text-[18px] font-semibold tracking-[0.04em] text-white/60`}>{author.role} · {author.outlet}</p>
           <p className="pretty mt-6 max-w-[60ch] text-[17px] leading-[1.65] text-white/80">{author.longBio}</p>
         </div>

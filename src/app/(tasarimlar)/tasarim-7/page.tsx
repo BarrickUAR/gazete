@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Literata, Hanken_Grotesk } from "next/font/google";
+import { Frank_Ruhl_Libre, Hanken_Grotesk } from "next/font/google";
 import { Portrait } from "@/components/portrait";
 import { author, lead, articles, columns, dossiers, sections, img } from "@/lib/mock";
 
-const lit = Literata({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700"], style: ["normal", "italic"], variable: "--f-lit" });
+// Financial Times: Financier Display yerine keskin serif Frank Ruhl Libre · FT Metric hissi için Hanken Grotesk
+const lit = Frank_Ruhl_Libre({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700"], variable: "--f-lit" });
 const hk = Hanken_Grotesk({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700"], variable: "--f-hk" });
 
 export const metadata: Metadata = { title: "Tasarım 7 · Pembe Gazete — Çetiner Çetin" };
@@ -39,7 +40,7 @@ export default function PembeGazete() {
       {/* masthead */}
       <header className="mx-auto max-w-[1220px] px-5">
         <div className="py-6 text-center sm:py-8">
-          <a href="#" className={`${SERIF} text-[34px] font-medium uppercase tracking-[0.14em] text-[#1a1817] sm:text-[52px]`}>
+          <a href="#" className={`${SERIF} text-[40px] font-medium tracking-[-0.01em] text-[#1a1817] sm:text-[64px]`}>
             Çetiner Çetin
           </a>
         </div>
@@ -59,7 +60,7 @@ export default function PembeGazete() {
               <img src={img(a1.img)} alt="" className="aspect-[16/10] w-full object-cover" />
               <div className="mt-4">
                 <Tag>{a1.section}</Tag>
-                <h1 className={`${SERIF} balance mt-1.5 text-[32px] font-semibold leading-[1.12] text-[#1a1817] group-hover:text-[#5c5552] sm:text-[38px]`}>{a1.title}</h1>
+                <h1 className={`${SERIF} balance mt-1.5 text-[34px] font-medium leading-[1.06] tracking-[-0.01em] text-[#1a1817] group-hover:text-[#5c5552] sm:text-[44px]`}>{a1.title}</h1>
                 <p className="pretty mt-3 text-[17px] leading-[1.5]">{a1.dek}</p>
               </div>
             </a>
@@ -81,7 +82,7 @@ export default function PembeGazete() {
               <article key={a.slug} className={`${i > 0 ? "border-t pt-4 sm:border-t-0 sm:pt-0 lg:border-t lg:pt-4" : ""} pb-4`} style={{ borderColor: "#ccc1b7" }}>
                 {i === 0 && <img src={img(a.img)} alt="" className="mb-3 aspect-[16/9] w-full object-cover" />}
                 <Tag>{a.section}</Tag>
-                <h3 className={`${SERIF} balance mt-1 text-[20px] font-semibold leading-[1.22] text-[#1a1817]`}>
+                <h3 className={`${SERIF} balance mt-1 text-[20px] font-medium leading-[1.15] text-[#1a1817]`}>
                   <a href={a.url} className="hover:text-[#5c5552]">{a.title}</a>
                 </h3>
                 <p className="mt-1.5 text-[14.5px] leading-[1.45]">{a.dek}</p>
@@ -97,11 +98,11 @@ export default function PembeGazete() {
                 <div className="flex gap-3">
                   <div className="flex-1">
                     <p className="text-[13px] font-semibold" style={{ color: CLARET }}>{author.name}</p>
-                    <h3 className={`${SERIF} balance mt-1 text-[18px] font-semibold leading-[1.25] text-[#1a1817]`}>
+                    <h3 className={`${SERIF} balance mt-1 text-[19px] font-medium leading-[1.18] text-[#1a1817]`}>
                       <a href={c.url} className="hover:text-[#5c5552]">{c.title}</a>
                     </h3>
                   </div>
-                  <Portrait small bg={TINT} className="h-16 w-16 shrink-0 rounded-full" />
+                  <Portrait small bg={TINT} className="h-[68px] w-[68px] shrink-0 rounded-full" />
                 </div>
               </article>
             ))}
@@ -122,8 +123,8 @@ export default function PembeGazete() {
         <section className="mt-10 grid gap-6 sm:grid-cols-2">
           {[a5, a6].map((a) => (
             <article key={a.slug} className="p-4" style={{ background: TINT }}>
-              <Tag color={TEAL}>{a.section}</Tag>
-              <h3 className={`${SERIF} balance mt-1.5 text-[19px] font-semibold leading-[1.25] text-[#1a1817]`}>
+              <Tag>{a.section}</Tag>
+              <h3 className={`${SERIF} balance mt-1.5 text-[21px] font-medium leading-[1.15] text-[#1a1817]`}>
                 <a href={a.url} className="hover:underline">{a.title}</a>
               </h3>
               <p className="mt-3 text-[12.5px] text-[#66605c]">{a.date}</p>
@@ -139,7 +140,7 @@ export default function PembeGazete() {
               {dossiers.map((d) => (
                 <a key={d.title} href="#" className="group">
                   <img src={img(d.img)} alt="" className="aspect-square w-full object-cover" />
-                  <p className={`${SERIF} mt-2.5 text-[18px] font-semibold text-[#1a1817] group-hover:underline`}>{d.title}</p>
+                  <p className={`${SERIF} mt-2.5 text-[20px] font-medium leading-tight text-[#1a1817] group-hover:underline`}>{d.title}</p>
                   <p className="text-[12.5px] text-[#66605c]">{d.count} yazı</p>
                 </a>
               ))}
@@ -161,7 +162,7 @@ export default function PembeGazete() {
 
       <footer style={{ background: "#33302e", color: "#e9dccf" }}>
         <div className="mx-auto flex max-w-[1220px] flex-col justify-between gap-3 px-5 py-7 text-[13px] sm:flex-row sm:items-center">
-          <span className={`${SERIF} text-[20px] uppercase tracking-[0.14em] text-white`}>Çetiner Çetin</span>
+          <span className={`${SERIF} text-[24px] font-medium text-white`}>Çetiner Çetin</span>
           <span>© 2026 · İletişim · Gizlilik · RSS</span>
         </div>
       </footer>

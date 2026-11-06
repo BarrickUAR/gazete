@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { Schibsted_Grotesk, Spectral } from "next/font/google";
+import { Geist, Geist_Mono, Spectral } from "next/font/google";
 import { Portrait } from "@/components/portrait";
 import { author, lead as top0, articles, columns, appearances, dossiers, img } from "@/lib/mock";
 
-const grot = Schibsted_Grotesk({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700"], variable: "--f-sg" });
-const spec = Spectral({ subsets: ["latin", "latin-ext"], weight: ["300", "400"], style: ["normal", "italic"], variable: "--f-sp" });
+// Monocle / kişisel basın kiti: Geist (arayüz, gövde) · Geist Mono (tarih, meta) · Spectral (başlıklar)
+const geist = Geist({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600"], variable: "--f-geist" });
+const gmono = Geist_Mono({ subsets: ["latin", "latin-ext"], weight: ["400", "500"], variable: "--f-gmono" });
+const spec = Spectral({ subsets: ["latin", "latin-ext"], weight: ["300", "400", "500", "600"], style: ["normal", "italic"], variable: "--f-sp" });
 
 export const metadata: Metadata = { title: "Tasarım 5 · Portfolyo — Çetiner Çetin" };
 
 const SP = "font-[family-name:var(--f-sp)]";
+const MONO = "font-[family-name:var(--f-gmono)]";
 const INK = "#15171a";
 const MUTED = "#6b7076";
 const LINE = "#e6e6e3";
@@ -23,35 +26,48 @@ const filters = [
   ["Deprem", 3],
 ] as const;
 
+const beats = ["Dış politika", "Güvenlik", "Orta Doğu", "NATO", "Seçimler", "Kafkasya"];
+
+function Meta({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <p className={`${MONO} text-[11.5px] uppercase tracking-[0.04em] ${className}`} style={{ color: MUTED }}>{children}</p>;
+}
+
 export default function Portfolyo() {
   const lead = articles[3];
   const feed = [articles[0], articles[1], columns[0], articles[2], top0, articles[4], articles[5], columns[1]];
 
   return (
-    <div className={`${grot.variable} ${spec.variable} font-[family-name:var(--f-sg)] min-h-screen bg-white`} style={{ color: INK }}>
+    <div className={`${geist.variable} ${gmono.variable} ${spec.variable} font-[family-name:var(--f-geist)] min-h-screen bg-white antialiased`} style={{ color: INK }}>
       <div className="mx-auto max-w-[1400px] lg:grid lg:grid-cols-[400px_1fr]">
         {/* sabit kimlik paneli */}
-        <aside className="border-b lg:sticky lg:top-0 lg:h-screen lg:border-b-0 lg:border-r" style={{ borderColor: LINE, background: "#f7f7f5" }}>
-          <div className="flex h-full flex-col px-6 py-8 lg:px-10 lg:py-10">
+        <aside className="border-b lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto lg:border-b-0 lg:border-r" style={{ borderColor: LINE, background: "#f7f7f5" }}>
+          <div className="flex min-h-full flex-col px-6 py-8 lg:px-10 lg:py-10">
             <div className="flex items-center gap-4">
-              <Portrait small font={SP} bg="#e4e4df" fg={INK} className="h-14 w-14 rounded-full" />
+              <Portrait small bg="#e4e4df" className="h-16 w-16 rounded-full ring-1 ring-black/5" />
               <div>
-                <p className="text-[13px] font-medium" style={{ color: ACC }}>Gazeteci</p>
-                <p className="text-[13px]" style={{ color: MUTED }}>{author.outlet}</p>
+                <Meta>Gazeteci</Meta>
+                <p className="mt-1 text-[14px] font-medium">{author.outlet}</p>
               </div>
             </div>
 
-            <h1 className="mt-8 text-[44px] font-semibold leading-[0.98] tracking-[-0.035em] lg:text-[52px]">
+            <h1 className={`${SP} mt-8 text-[48px] font-semibold leading-[0.95] tracking-[-0.025em] lg:text-[58px]`}>
               Çetiner
               <br />
               Çetin
             </h1>
-            <p className="mt-4 text-[15px] font-medium leading-snug">
-              {author.role}, <span style={{ color: ACC }}>{author.outlet}</span>
-            </p>
-            <p className={`${SP} pretty mt-5 text-[17px] font-light leading-[1.55]`} style={{ color: "#3b3f44" }}>
+            <p className="mt-4 text-[14.5px] font-medium leading-snug">{author.role}</p>
+            <p className={`${SP} pretty mt-4 text-[17px] leading-[1.55]`} style={{ color: "#3b3f44" }}>
               {author.shortBio}
             </p>
+
+            <div className="mt-6">
+              <Meta>Alanlar</Meta>
+              <ul className="mt-2.5 flex flex-wrap gap-1.5">
+                {beats.map((b) => (
+                  <li key={b} className="rounded border bg-white px-2 py-1 text-[12.5px]" style={{ borderColor: "#dcdcd7" }}>{b}</li>
+                ))}
+              </ul>
+            </div>
 
             <nav className="mt-8 hidden border-t lg:block" style={{ borderColor: LINE }}>
               {[
@@ -61,51 +77,52 @@ export default function Portfolyo() {
                 ["Hakkında", ""],
                 ["İletişim", ""],
               ].map(([k, v], i) => (
-                <a key={k} href="#" className="group flex items-center justify-between border-b py-3 text-[15px]" style={{ borderColor: LINE }}>
+                <a key={k} href="#" className="group flex items-center justify-between border-b py-2.5 text-[14.5px]" style={{ borderColor: LINE }}>
                   <span className={i === 0 ? "font-semibold" : "transition-colors duration-150 group-hover:text-[#1f5b45]"}>{k}</span>
-                  <span className="tnum text-[13px]" style={{ color: MUTED }}>{v}</span>
+                  <span className={`${MONO} tnum text-[12px]`} style={{ color: MUTED }}>{v}</span>
                 </a>
               ))}
             </nav>
 
-            <div className="mt-8 flex gap-2 lg:mt-auto">
-              <a href="#" className="flex-1 rounded-md px-4 py-3 text-center text-[14px] font-semibold text-white transition-opacity duration-150 hover:opacity-90" style={{ background: INK }}>
+            <div className="mt-8 flex gap-2 lg:mt-auto lg:pt-8">
+              <a href="#" className="flex-1 rounded-md px-4 py-3 text-center text-[14px] font-medium text-white transition-colors duration-150 hover:bg-[#1f5b45]" style={{ background: INK }}>
                 İletişime geç
               </a>
-              <a href="#" className="rounded-md border px-4 py-3 text-[14px] font-semibold transition-colors duration-150 hover:border-[#15171a]" style={{ borderColor: "#d4d4cf" }}>
-                Bülten
+              <a href="#" className="rounded-md border bg-white px-4 py-3 text-[14px] font-medium transition-colors duration-150 hover:border-[#15171a]" style={{ borderColor: "#d4d4cf" }}>
+                Basın kiti
               </a>
             </div>
-            <p className="mt-5 text-[12.5px]" style={{ color: MUTED }}>X · YouTube · Instagram · RSS</p>
+            <Meta className="mt-5">X · YouTube · Instagram · RSS</Meta>
           </div>
         </aside>
 
         {/* akış */}
         <main className="min-w-0 px-5 py-8 sm:px-8 lg:px-14 lg:py-10">
           {/* öne çıkan */}
-          <p className="text-[13px] font-medium" style={{ color: MUTED }}>Öne çıkan · {lead.date}</p>
+          <div className="flex items-baseline justify-between">
+            <Meta>Öne çıkan</Meta>
+            <Meta>{lead.date}</Meta>
+          </div>
           <a href={lead.url} className="group mt-4 block">
-            <div className="overflow-hidden rounded-lg">
-              <img src={img(lead.img, 1600, 900)} alt="" className="aspect-[16/8] w-full object-cover transition-transform duration-200 group-hover:scale-[1.01]" />
-            </div>
-            <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_280px]">
+            <img src={img(lead.img)} alt="" className="aspect-[16/8] w-full rounded-lg object-cover" />
+            <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_300px]">
               <div>
-                <p className="text-[13px] font-semibold" style={{ color: ACC }}>{lead.section} · {lead.kind}</p>
-                <h2 className="balance mt-2 text-[34px] font-semibold leading-[1.08] tracking-[-0.025em] sm:text-[42px]">{lead.title}</h2>
+                <p className="text-[13px] font-medium" style={{ color: ACC }}>{lead.section}</p>
+                <h2 className={`${SP} balance mt-2 text-[36px] font-semibold leading-[1.05] tracking-[-0.02em] transition-colors duration-150 group-hover:text-[#1f5b45] sm:text-[48px]`}>{lead.title}</h2>
               </div>
-              <p className={`${SP} pretty text-[17px] font-light leading-[1.55] xl:pt-7`} style={{ color: "#3b3f44" }}>{lead.dek}</p>
+              <p className={`${SP} pretty text-[17.5px] leading-[1.55] xl:pt-8`} style={{ color: "#3b3f44" }}>{lead.dek}</p>
             </div>
           </a>
 
           {/* filtre */}
-          <div className="mt-14 flex flex-wrap items-center gap-2 border-b pb-4" style={{ borderColor: LINE }}>
+          <div className="mt-14 flex flex-wrap items-center gap-x-6 gap-y-2 border-b" style={{ borderColor: LINE }}>
             {filters.map(([k, n], i) => (
               <a
                 key={k}
                 href="#"
-                className={`rounded-full border px-3.5 py-1.5 text-[13.5px] font-medium transition-colors duration-150 ${i === 0 ? "border-[#15171a] bg-[#15171a] text-white" : "border-[#e0e0dc] hover:border-[#15171a]"}`}
+                className={`-mb-px border-b-2 pb-3 text-[14px] transition-colors duration-150 ${i === 0 ? "border-[#1f5b45] font-semibold text-[#1f5b45]" : "border-transparent hover:text-[#1f5b45]"}`}
               >
-                {k} <span className={`tnum ml-1 ${i === 0 ? "text-white/60" : "text-[#9a9ea3]"}`}>{n}</span>
+                {k} <span className={`${MONO} tnum ml-0.5 text-[11.5px]`} style={{ color: i === 0 ? ACC : "#9a9ea3" }}>{n}</span>
               </a>
             ))}
           </div>
@@ -114,46 +131,46 @@ export default function Portfolyo() {
           <ul>
             {feed.map((a) => (
               <li key={a.slug}>
-                <a href={a.url} className="group grid grid-cols-[1fr_96px] gap-5 border-b py-6 sm:grid-cols-[110px_1fr_150px] sm:gap-8" style={{ borderColor: LINE }}>
+                <a href={a.url} className="group grid grid-cols-[1fr_96px] gap-5 border-b py-6 sm:grid-cols-[110px_1fr_160px] sm:gap-8" style={{ borderColor: LINE }}>
                   <div className="hidden sm:block">
-                    <p className="tnum text-[13.5px] font-medium">{a.date.replace(" 2026", "")}</p>
-                    <p className="mt-1 text-[12.5px]" style={{ color: MUTED }}>{a.readMin} dk</p>
+                    <p className={`${MONO} tnum text-[12px] uppercase`}>{a.date}</p>
+                    <p className={`${MONO} mt-1 text-[11.5px]`} style={{ color: MUTED }}>{a.readMin} dk</p>
                   </div>
                   <div>
-                    <p className="text-[12.5px] font-semibold" style={{ color: ACC }}>
+                    <p className="text-[12.5px] font-medium" style={{ color: ACC }}>
                       {a.kind}
                       {a.place && <span style={{ color: MUTED }} className="font-normal"> · {a.place}</span>}
                     </p>
-                    <h3 className="balance mt-1.5 text-[21px] font-semibold leading-[1.22] tracking-[-0.015em] transition-colors duration-150 group-hover:text-[#1f5b45] sm:text-[23px]">{a.title}</h3>
-                    <p className={`${SP} mt-2 text-[16px] font-light leading-[1.5]`} style={{ color: "#4a4e53" }}>{a.dek}</p>
-                    <p className="mt-2 text-[12.5px] sm:hidden" style={{ color: MUTED }}>{a.date} · {a.readMin} dk</p>
+                    <h3 className={`${SP} balance mt-1.5 text-[23px] font-semibold leading-[1.15] tracking-[-0.01em] transition-colors duration-150 group-hover:text-[#1f5b45] sm:text-[26px]`}>{a.title}</h3>
+                    <p className="mt-2 text-[14.5px] leading-[1.55]" style={{ color: "#4a4e53" }}>{a.dek}</p>
+                    <Meta className="mt-2 sm:hidden">{a.date} · {a.readMin} dk</Meta>
                   </div>
-                  <img src={img(a.img, 400, 300)} alt="" className="aspect-[4/3] w-full rounded-md object-cover" />
+                  <img src={img(a.img)} alt="" className="aspect-[4/3] w-full rounded-md object-cover" />
                 </a>
               </li>
             ))}
           </ul>
-          <a href="#" className="mt-6 inline-flex rounded-md border px-4 py-2.5 text-[14px] font-semibold transition-colors duration-150 hover:border-[#15171a]" style={{ borderColor: "#d4d4cf" }}>
+          <a href="#" className="mt-6 inline-flex rounded-md border px-4 py-2.5 text-[14px] font-medium transition-colors duration-150 hover:border-[#15171a]" style={{ borderColor: "#d4d4cf" }}>
             Daha fazla yükle
           </a>
 
           {/* ekranda */}
           <section className="mt-20">
             <div className="flex items-baseline justify-between border-b pb-3" style={{ borderColor: LINE }}>
-              <h2 className="text-[26px] font-semibold tracking-[-0.02em]">Ekranda</h2>
+              <h2 className={`${SP} text-[30px] font-semibold tracking-[-0.015em]`}>Ekranda</h2>
               <a href="#" className="text-[13.5px] font-medium hover:underline" style={{ color: ACC }}>Tüm yayınlar</a>
             </div>
             <div className="mt-6 grid gap-6 sm:grid-cols-2">
               {appearances.map((x, i) => (
                 <a key={x.topic} href="#" className="group flex gap-4">
                   <div className="relative w-[44%] shrink-0 overflow-hidden rounded-md">
-                    <img src={img(["election", "quake", "flags-row", "sudan"][i], 480, 270)} alt="" className="aspect-video w-full object-cover" />
-                    <span className="absolute bottom-1.5 right-1.5 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-semibold text-white">{x.dur}</span>
+                    <img src={img(["election", "quake", "flags-row", "sudan"][i])} alt="" className="aspect-video w-full object-cover" />
+                    <span className={`${MONO} absolute bottom-1.5 right-1.5 rounded bg-black/80 px-1.5 py-0.5 text-[10.5px] text-white`}>{x.dur}</span>
                   </div>
                   <div>
-                    <p className="text-[12.5px] font-medium" style={{ color: MUTED }}>{x.program}</p>
-                    <p className="mt-1 text-[16.5px] font-semibold leading-snug group-hover:text-[#1f5b45]">{x.topic}</p>
-                    <p className="mt-1 text-[12.5px]" style={{ color: MUTED }}>{x.date}</p>
+                    <Meta>{x.program}</Meta>
+                    <p className={`${SP} mt-1 text-[18.5px] font-semibold leading-[1.2] transition-colors group-hover:text-[#1f5b45]`}>{x.topic}</p>
+                    <Meta className="mt-1">{x.date}</Meta>
                   </div>
                 </a>
               ))}
@@ -161,20 +178,20 @@ export default function Portfolyo() {
           </section>
 
           {/* alıntı + dosyalar */}
-          <section className="mt-20 grid gap-10 rounded-xl p-8 sm:p-10 xl:grid-cols-[1.2fr_1fr]" style={{ background: "#f3f5f2" }}>
+          <section className="mt-20 grid gap-10 rounded-xl p-8 sm:p-10 xl:grid-cols-[1.2fr_1fr]" style={{ background: "#f1f4f1" }}>
             <a href={columns[1].url} className="group block">
-              <p className="text-[13px] font-semibold" style={{ color: ACC }}>Köşe yazısı · {columns[1].date}</p>
-              <p className={`${SP} mt-3 text-[30px] font-light italic leading-[1.25] group-hover:text-[#1f5b45] sm:text-[36px]`}>{columns[1].title}</p>
-              <p className="mt-4 text-[15.5px] leading-[1.55]" style={{ color: "#4a4e53" }}>{columns[1].dek}</p>
+              <Meta>Köşe yazısı · {columns[1].date}</Meta>
+              <p className={`${SP} mt-3 text-[32px] italic leading-[1.2] transition-colors group-hover:text-[#1f5b45] sm:text-[38px]`}>{columns[1].title}</p>
+              <p className="mt-4 text-[15px] leading-[1.6]" style={{ color: "#4a4e53" }}>{columns[1].dek}</p>
             </a>
             <div>
-              <p className="text-[13px] font-semibold" style={{ color: ACC }}>Haber dosyaları</p>
+              <Meta>Haber dosyaları</Meta>
               <ul className="mt-3">
                 {dossiers.map((d) => (
                   <li key={d.title}>
-                    <a href="#" className="group flex items-baseline justify-between border-b py-3 text-[17px] font-medium" style={{ borderColor: "#dfe3dd" }}>
-                      <span className="group-hover:text-[#1f5b45]">{d.title}</span>
-                      <span className="tnum text-[13px] font-normal" style={{ color: MUTED }}>{d.count} yazı</span>
+                    <a href="#" className="group flex items-baseline justify-between border-b py-3" style={{ borderColor: "#dbe1da" }}>
+                      <span className={`${SP} text-[19px] font-medium group-hover:text-[#1f5b45]`}>{d.title}</span>
+                      <span className={`${MONO} tnum text-[11.5px]`} style={{ color: MUTED }}>{d.count} yazı</span>
                     </a>
                   </li>
                 ))}
@@ -182,7 +199,7 @@ export default function Portfolyo() {
             </div>
           </section>
 
-          <footer className="mt-16 flex flex-col justify-between gap-2 border-t pt-5 text-[12.5px] sm:flex-row" style={{ borderColor: LINE, color: MUTED }}>
+          <footer className={`${MONO} mt-16 flex flex-col justify-between gap-2 border-t pt-5 text-[11.5px] uppercase sm:flex-row`} style={{ borderColor: LINE, color: MUTED }}>
             <span>© 2026 Çetiner Çetin</span>
             <span>X · YouTube · RSS</span>
           </footer>

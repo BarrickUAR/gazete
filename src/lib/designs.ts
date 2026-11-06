@@ -15,7 +15,7 @@ export const designs: Design[] = [
     name: "Gazete",
     tag: "Klasik · NYT çizgisi",
     desc: "Serif masthead, ince çizgiler, çok kolonlu manşet. Güven veren, kurumsal ve zamansız.",
-    fonts: "Blackletter masthead / Gelasio (Georgia) / Franklin",
+    fonts: "Old English masthead / Source Serif 4 / Gelasio / Libre Franklin",
     swatch: ["#ffffff", "#121212", "#326891"],
   },
   {
@@ -24,7 +24,7 @@ export const designs: Design[] = [
     name: "Muhabir Dosyası",
     tag: "Sinematik · Koyu",
     desc: "Siyah-beyaz büyük fotoğraf, sahadan muhabir defteri, belgesel havası.",
-    fonts: "Fraunces / IBM Plex Sans / Plex Mono",
+    fonts: "Bodoni Moda / IBM Plex Sans + Condensed / Plex Mono",
     swatch: ["#0e0e0d", "#ece8e1", "#d23a2f"],
   },
   {
@@ -33,7 +33,7 @@ export const designs: Design[] = [
     name: "Köşe Yazarı",
     tag: "Dergi · Okuma odaklı",
     desc: "Krem kâğıt, drop-cap, yazı dizini ve büyük alıntılar. Sakin, ağırbaşlı.",
-    fonts: "Newsreader / DM Sans",
+    fonts: "Cormorant Garamond / EB Garamond / Jost",
     swatch: ["#f5f0e6", "#1d1a16", "#8a2e1e"],
   },
   {
@@ -42,7 +42,7 @@ export const designs: Design[] = [
     name: "Yayın Kuruluşu",
     tag: "Portal · BBC tarzı",
     desc: "Kutulu logo, kart grid, canlı etiketi, en çok okunanlar. Net ve hızlı.",
-    fonts: "Noto Sans / Noto Serif",
+    fonts: "Source Sans 3 / Roboto Serif",
     swatch: ["#ffffff", "#141414", "#b80000"],
   },
   {
@@ -51,7 +51,7 @@ export const designs: Design[] = [
     name: "Portfolyo",
     tag: "Sade · Kişisel arşiv",
     desc: "Solda sabit muhabir kimliği, sağda filtrelenebilir yayın akışı. Ferah, modern, kurumsal.",
-    fonts: "Schibsted Grotesk / Spectral",
+    fonts: "Geist / Geist Mono / Spectral",
     swatch: ["#ffffff", "#15171a", "#1f5b45"],
   },
   {
@@ -60,7 +60,7 @@ export const designs: Design[] = [
     name: "Yayın Stüdyosu",
     tag: "TV · Canlı yayın grafiği",
     desc: "Alt bant, canlı saat, son dakika şeridi ve yayın akışı. Ekran gazeteciliğinin dili.",
-    fonts: "Barlow Condensed / Barlow",
+    fonts: "Archivo (genişlik ekseni)",
     swatch: ["#070f1e", "#ffffff", "#e5141b", "#ffc21a"],
   },
   {
@@ -69,7 +69,7 @@ export const designs: Design[] = [
     name: "Pembe Gazete",
     tag: "FT tarzı · Somon kâğıt",
     desc: "Somon zemin, bordo vurgu, yoğun ama sakin gazete ızgarası.",
-    fonts: "Literata / Hanken Grotesk",
+    fonts: "Frank Ruhl Libre / Hanken Grotesk",
     swatch: ["#fff1e5", "#33302e", "#990f3d", "#0d7680"],
   },
   {
@@ -78,7 +78,7 @@ export const designs: Design[] = [
     name: "Analiz Dergisi",
     tag: "Dergi · Dış politika",
     desc: "Lacivert kapak, Caslon başlıklar, 'Bu sayıda' içindekiler.",
-    fonts: "Libre Caslon / Work Sans",
+    fonts: "Libre Caslon / Fira Sans",
     swatch: ["#0f2440", "#f7f4ee", "#c4262e"],
   },
 ];

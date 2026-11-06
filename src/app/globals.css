@@ -32,6 +32,7 @@ img {
   line-height: 0.82;
   padding: 0.06em 0.09em 0 0;
   font-weight: 500;
+  font-family: var(--f-disp, inherit);
 }
 
 @keyframes marquee {

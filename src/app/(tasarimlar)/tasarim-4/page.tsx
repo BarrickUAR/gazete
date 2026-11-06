@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Noto_Sans, Noto_Serif } from "next/font/google";
+import { Source_Sans_3, Roboto_Serif } from "next/font/google";
 import { Portrait } from "@/components/portrait";
 import { author, lead as a3, articles, columns, appearances, sections, img } from "@/lib/mock";
 
-const sans = Noto_Sans({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700", "800"], variable: "--f-ns" });
-const serif = Noto_Serif({ subsets: ["latin", "latin-ext"], weight: ["400", "700"], style: ["normal", "italic"], variable: "--f-nsf" });
+// BBC News: Reith Sans karşılığı Source Sans 3 (hümanist grotesk) · Reith Serif hissi için düşük kontrastlı Roboto Serif (başlıklar)
+const sans = Source_Sans_3({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700", "800"], variable: "--f-ns" });
+const serif = Roboto_Serif({ subsets: ["latin", "latin-ext"], weight: ["500", "600", "700"], style: ["normal", "italic"], variable: "--f-nsf" });
 
 export const metadata: Metadata = { title: "Tasarım 4 · Yayın Kuruluşu — Çetiner Çetin" };
 
@@ -37,7 +38,7 @@ function Card({ a, size = "md" }: { a: (typeof articles)[number]; size?: "sm" | 
   return (
     <article className="group">
       <img src={img(a.img, 800, 450)} alt="" className="aspect-video w-full object-cover" />
-      <h3 className={`balance mt-3 font-bold leading-[1.22] group-hover:underline ${size === "sm" ? "text-[17px]" : "text-[19px]"}`}>
+      <h3 className={`${SERIF} balance mt-3 font-semibold leading-[1.2] tracking-[-0.005em] decoration-2 underline-offset-2 group-hover:underline ${size === "sm" ? "text-[18px]" : "text-[21px]"}`}>
         <a href={a.url}>{a.title}</a>
       </h3>
       {size === "md" && <p className="mt-2 text-[15px] leading-[1.45] text-[#3f3f42]">{a.dek}</p>}
@@ -49,7 +50,7 @@ function Card({ a, size = "md" }: { a: (typeof articles)[number]; size?: "sm" | 
 function SectionHead({ title, dark = false }: { title: string; dark?: boolean }) {
   return (
     <div className={`flex items-center justify-between border-t-2 pt-2.5 ${dark ? "border-white" : "border-black"}`}>
-      <h2 className="text-[20px] font-extrabold">{title}</h2>
+      <h2 className="text-[22px] font-bold tracking-[-0.01em]">{title}</h2>
       <a href="#" className={`text-[13px] font-semibold hover:underline ${dark ? "text-white" : "text-black"}`}>Tümü →</a>
     </div>
   );
@@ -91,7 +92,7 @@ export default function Yayin() {
           <div className="order-2 flex flex-col gap-6 lg:order-1 lg:col-span-3 lg:border-r lg:border-[#e0e0e0] lg:pr-6">
             <article className="group">
               <p className="mb-2 inline-flex items-center gap-1.5 text-[12px] font-extrabold uppercase" style={{ color: RED }}>Sahadan · {a2.place}</p>
-              <h3 className="balance text-[19px] font-bold leading-[1.22] group-hover:underline"><a href={a2.url}>{a2.title}</a></h3>
+              <h3 className={`${SERIF} balance text-[21px] font-semibold leading-[1.2] decoration-2 underline-offset-2 group-hover:underline`}><a href={a2.url}>{a2.title}</a></h3>
               <p className="mt-2 text-[15px] leading-[1.45] text-[#3f3f42]">{a2.dek}</p>
               <Meta time={a2.date} section={a2.section} />
             </article>
@@ -102,7 +103,7 @@ export default function Yayin() {
 
           <article className="group order-1 lg:order-2 lg:col-span-6">
             <img src={img(a3.img, 1400, 788)} alt="" className="aspect-video w-full object-cover" />
-            <h1 className="balance mt-4 text-[28px] font-extrabold leading-[1.15] tracking-[-0.01em] group-hover:underline sm:text-[34px]">
+            <h1 className={`${SERIF} balance mt-4 text-[30px] font-bold leading-[1.1] tracking-[-0.01em] decoration-2 underline-offset-4 group-hover:underline sm:text-[40px]`}>
               <a href={a3.url}>{a3.title}</a>
             </h1>
             <p className="pretty mt-3 text-[17px] leading-[1.5] text-[#3f3f42]">{a3.dek}</p>
@@ -132,7 +133,7 @@ export default function Yayin() {
               {columns.map((c) => (
                 <article key={c.slug} className="group border-l-4 border-black pl-4">
                   <div className="flex items-center gap-2.5">
-                    <Portrait small font={SERIF} bg="#ebebeb" fg="#141414" className="h-10 w-10 rounded-full" />
+                    <Portrait small bg="#ebebeb" className="h-11 w-11 rounded-full" />
                     <p className="text-[13px] font-bold">{author.name}</p>
                   </div>
                   <h3 className={`${SERIF} balance mt-3 text-[20px] font-bold leading-[1.25] group-hover:underline`}><a href={c.url}>{c.title}</a></h3>
@@ -147,8 +148,8 @@ export default function Yayin() {
             <ol className="mt-2">
               {[a2, a3, a1, a5, lead].map((a, i) => (
                 <li key={a.slug} className="flex gap-4 border-b border-[#e0e0e0] py-3.5 last:border-0">
-                  <span className="tnum w-7 shrink-0 text-[34px] font-light leading-none" style={{ color: RED }}>{i + 1}</span>
-                  <a href={a.url} className="text-[15.5px] font-bold leading-snug hover:underline">{a.title}</a>
+                  <span className="tnum w-8 shrink-0 text-[36px] font-light leading-[0.9]" style={{ color: RED }}>{i + 1}</span>
+                  <a href={a.url} className={`${SERIF} text-[16.5px] font-semibold leading-[1.25] hover:underline`}>{a.title}</a>
                 </li>
               ))}
             </ol>
@@ -170,7 +171,7 @@ export default function Yayin() {
                     {x.dur}
                   </span>
                 </div>
-                <h3 className="mt-3 text-[16.5px] font-bold leading-snug group-hover:underline">{x.topic}</h3>
+                <h3 className={`${SERIF} mt-3 text-[18px] font-semibold leading-[1.2] group-hover:underline`}>{x.topic}</h3>
                 <p className="mt-1.5 text-[12.5px] text-[#b8b8b8]">{x.program} · {x.date}</p>
               </a>
             ))}
@@ -182,9 +183,9 @@ export default function Yayin() {
       <section className="mx-auto max-w-[1280px] px-5 py-12">
         <SectionHead title="Muhabir" />
         <div className="mt-6 grid items-center gap-8 md:grid-cols-12">
-          <Portrait font={SERIF} bg="#ebebeb" fg="#141414" className="aspect-square w-full md:col-span-3" />
+          <Portrait bg="#ebebeb" className="aspect-square w-full md:col-span-3" />
           <div className="md:col-span-6">
-            <p className="text-[30px] font-extrabold leading-tight">{author.name}</p>
+            <p className={`${SERIF} text-[34px] font-bold leading-tight`}>{author.name}</p>
             <p className="mt-1 text-[14px] font-semibold text-[#545658]">{author.role} · {author.outlet}</p>
             <p className="pretty mt-4 text-[16.5px] leading-[1.6] text-[#3f3f42]">{author.longBio}</p>
           </div>

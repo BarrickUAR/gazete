@@ -1,24 +1,27 @@
 import type { Metadata } from "next";
-import { Libre_Caslon_Display, Libre_Caslon_Text, Work_Sans } from "next/font/google";
+import { Libre_Caslon_Display, Libre_Caslon_Text, Fira_Sans, Fira_Sans_Condensed } from "next/font/google";
 import { Portrait } from "@/components/portrait";
 import { author, lead, articles, columns, dossiers, img } from "@/lib/mock";
 
 const disp = Libre_Caslon_Display({ subsets: ["latin", "latin-ext"], weight: "400", variable: "--f-lcd" });
 const text = Libre_Caslon_Text({ subsets: ["latin", "latin-ext"], weight: ["400", "700"], style: ["normal", "italic"], variable: "--f-lct" });
-const work = Work_Sans({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600"], variable: "--f-ws" });
+// The Economist / Foreign Affairs: Caslon başlık + metin · Econ Sans (Milo) hissi için Fira Sans, rubriklerde Fira Sans Condensed
+const work = Fira_Sans({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600"], variable: "--f-ws" });
+const fcond = Fira_Sans_Condensed({ subsets: ["latin", "latin-ext"], weight: ["500", "600"], variable: "--f-fsc" });
 
 export const metadata: Metadata = { title: "Tasarım 8 · Analiz Dergisi — Çetiner Çetin" };
 
 const D = "font-[family-name:var(--f-lcd)]";
 const T = "font-[family-name:var(--f-lct)]";
 const W = "font-[family-name:var(--f-ws)]";
+const FC = "font-[family-name:var(--f-fsc)]";
 const NAVY = "#0f2440";
 const RED = "#c4262e";
 const CREAM = "#f7f4ee";
 
 function Caps({ children, className = "", color }: { children: React.ReactNode; className?: string; color?: string }) {
   return (
-    <p className={`${W} text-[11.5px] font-semibold uppercase tracking-[0.16em] ${className}`} style={color ? { color } : undefined}>
+    <p className={`${FC} text-[12.5px] font-semibold uppercase tracking-[0.1em] ${className}`} style={color ? { color } : undefined}>
       {children}
     </p>
   );
@@ -28,11 +31,11 @@ export default function AnalizDergisi() {
   const toc = [articles[2], articles[0], articles[4], articles[5], articles[6], articles[7], articles[3], columns[2]];
 
   return (
-    <div className={`${disp.variable} ${text.variable} ${work.variable} ${T} min-h-screen`} style={{ background: CREAM, color: "#1b1d22" }}>
+    <div className={`${disp.variable} ${text.variable} ${work.variable} ${fcond.variable} ${T} min-h-screen antialiased`} style={{ background: CREAM, color: "#1b1d22" }}>
       {/* üst */}
       <header style={{ background: NAVY }} className="text-white">
         <div className="mx-auto flex max-w-[1240px] items-center justify-between px-5 py-4 lg:px-8">
-          <a href="#" className={`${W} text-[13px] font-semibold uppercase tracking-[0.28em]`}>Çetiner Çetin</a>
+          <a href="#" className={`${D} px-3 pb-1.5 pt-2 text-[22px] leading-none text-white`} style={{ background: RED }}>Çetiner Çetin</a>
           <nav className={`${W} hidden gap-7 text-[13px] text-white/70 md:flex`}>
             {["Analiz", "Görüş", "Dosyalar", "Sahadan", "Hakkında"].map((n) => (
               <a key={n} href="#" className="transition-colors duration-150 hover:text-white">{n}</a>
@@ -46,7 +49,8 @@ export default function AnalizDergisi() {
       <section style={{ background: NAVY }} className="text-white">
         <div className="mx-auto grid max-w-[1240px] gap-10 border-t border-white/15 px-5 pb-16 pt-12 lg:grid-cols-12 lg:px-8 lg:pb-20 lg:pt-16">
           <div className="flex flex-col lg:col-span-7">
-            <Caps color="#ff8a8f">Kapak · {lead.section}</Caps>
+            <span className="mb-4 block h-[7px] w-[26px]" style={{ background: RED }} />
+            <Caps color="#ffffffb3">Kapak · {lead.section}</Caps>
             <h1 className={`${D} balance mt-6 text-[52px] leading-[1.02] sm:text-[76px] lg:text-[88px]`}>
               <a href={lead.url} className="hover:text-white/85">{lead.title}</a>
             </h1>
@@ -63,7 +67,10 @@ export default function AnalizDergisi() {
             <div className="border border-white/20 p-2.5">
               <img src={img(lead.img)} alt="" className="aspect-[4/5] w-full object-cover" />
             </div>
-            <figcaption className={`${W} mt-2.5 text-[11.5px] text-white/45`}>Fotoğraf: Wikimedia Commons</figcaption>
+            <figcaption className={`${W} mt-2.5 flex justify-between gap-4 text-[11.5px] text-white/50`}>
+              <span>Finlandiya bayrağı NATO karargâhında, 4 Nisan 2023</span>
+              <span className="shrink-0">Wikimedia Commons</span>
+            </figcaption>
           </figure>
         </div>
       </section>
@@ -81,7 +88,7 @@ export default function AnalizDergisi() {
                 <span className={`${D} tnum text-[30px] leading-none`} style={{ color: RED }}>{String(i + 1).padStart(2, "0")}</span>
                 <span>
                   <Caps color="#6b6f78">{a.section} · {a.date}</Caps>
-                  <span className="balance mt-2 block text-[22px] font-bold leading-[1.22] group-hover:underline" style={{ color: NAVY }}>{a.title}</span>
+                  <span className={`${D} balance mt-2 block text-[26px] leading-[1.12] decoration-1 underline-offset-4 group-hover:underline`} style={{ color: NAVY }}>{a.title}</span>
                   <span className="mt-2 block text-[15.5px] italic leading-[1.5] text-[#4a4d55]">{a.dek}</span>
                 </span>
               </a>
@@ -108,7 +115,7 @@ export default function AnalizDergisi() {
         <div className="mt-5 grid grid-cols-2 gap-px lg:grid-cols-4" style={{ background: "#ddd6c9" }}>
           {dossiers.map((d) => (
             <a key={d.title} href="#" className="group p-6 transition-colors duration-150 hover:bg-white" style={{ background: CREAM }}>
-              <span className="block h-[3px] w-10" style={{ background: RED }} />
+              <span className="block h-[6px] w-[22px]" style={{ background: RED }} />
               <p className={`${D} mt-5 text-[30px] leading-none`} style={{ color: NAVY }}>{d.title}</p>
               <p className={`${W} mt-3 text-[13px] text-[#6b6f78]`}>{d.count} yazı · {d.years}</p>
             </a>
@@ -134,7 +141,7 @@ export default function AnalizDergisi() {
 
       <footer className={`${W} border-t border-white/10 text-[12.5px] text-white/50`} style={{ background: NAVY }}>
         <div className="mx-auto flex max-w-[1240px] flex-col justify-between gap-2 px-5 py-6 sm:flex-row lg:px-8">
-          <span className="uppercase tracking-[0.28em] text-white/80">Çetiner Çetin</span>
+          <span className={`${D} px-2.5 pb-1 pt-1.5 text-[18px] leading-none text-white`} style={{ background: RED }}>Çetiner Çetin</span>
           <span>© 2026 · X · RSS</span>
         </div>
       </footer>
