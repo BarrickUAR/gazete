@@ -28,14 +28,14 @@ function Meta({ a }: { a: { date: string; readMin: number } }) {
 }
 
 export default function Gazete() {
-  const [a1, a2, a3, a4, a5] = articles;
+  const [a1, a2, a3, a4, a5, a6, a7] = articles;
   return (
     <div className={`${mast.variable} ${serif.variable} ${sans.variable} ${S} bg-white text-[#121212]`}>
       {/* üst şerit */}
       <div className={`${F} border-b border-[#e2e2e2] text-[11px]`}>
         <div className="mx-auto flex max-w-[1240px] items-center justify-between px-5 py-2">
           <span className="font-semibold">{author.today}</span>
-          <span className="hidden text-[#555] sm:block">İstanbul · Bugünün dosyası: Karadeniz güvenliği</span>
+          <span className="hidden text-[#555] sm:block">{author.outlet} köşe yazarı</span>
           <a href="#bulten" className="rounded-[3px] bg-[#326891] px-3 py-1.5 font-bold uppercase tracking-wide text-white">
             Bültene katıl
           </a>
@@ -49,7 +49,7 @@ export default function Gazete() {
             Çetiner Çetin
           </h1>
           <p className={`${S} mt-3 text-[15px] italic text-[#444]`}>
-            Dış politika, güvenlik ve sahadan haber — {author.outlet}
+            Dış politika, güvenlik ve Türkiye gündemi — {author.outlet}
           </p>
         </div>
         <nav className={`${F} border-y border-[#121212] text-[12.5px] font-medium`}>
@@ -74,19 +74,20 @@ export default function Gazete() {
               <div className="md:col-span-2 md:pt-1">
                 <Kicker>{lead.section} · {lead.kind}</Kicker>
                 <h2 className={`${S} balance mt-2 text-[30px] font-bold leading-[1.12] tracking-[-0.01em] lg:text-[34px]`}>
-                  <a href="#" className="hover:text-[#4b4b4b]">{lead.title}</a>
+                  <a href={lead.url} className="hover:text-[#4b4b4b]">{lead.title}</a>
                 </h2>
                 <p className="pretty mt-3 text-[17px] leading-[1.5] text-[#363636]">{lead.dek}</p>
                 <ul className="mt-4 space-y-3 border-t border-[#e2e2e2] pt-3 text-[15px] leading-snug">
-                  <li><a href="#" className="font-semibold hover:underline">Boğazlar ve Montrö: Sözleşme neden yeniden gündemde?</a></li>
-                  <li><a href="#" className="font-semibold hover:underline">Mayın temizliği görevinde Türk donanmasının rolü</a></li>
+                  {[a6, a7].map((r) => (
+                    <li key={r.slug}><a href={r.url} className="font-semibold hover:underline">{r.title}</a></li>
+                  ))}
                 </ul>
                 <Meta a={lead} />
               </div>
               <figure className="md:col-span-3">
                 <img src={img(lead.img, 1200, 800)} alt="" className="aspect-[3/2] w-full object-cover" />
                 <figcaption className={`${F} mt-1.5 text-right text-[11px] text-[#727272]`}>
-                  Fotoğraf: Temsilî · {lead.place}
+                  Fotoğraf: Wikimedia Commons
                 </figcaption>
               </figure>
             </article>
@@ -97,7 +98,7 @@ export default function Gazete() {
                   <img src={img(a.img, 600, 400)} alt="" className="mb-3 aspect-[3/2] w-full object-cover" />
                   <Kicker>{a.section}</Kicker>
                   <h3 className="balance mt-1.5 text-[20px] font-bold leading-[1.2]">
-                    <a href="#" className="hover:text-[#4b4b4b]">{a.title}</a>
+                    <a href={a.url} className="hover:text-[#4b4b4b]">{a.title}</a>
                   </h3>
                   <p className="mt-2 text-[15px] leading-[1.45] text-[#363636]">{a.dek}</p>
                   <Meta a={a} />
@@ -111,7 +112,7 @@ export default function Gazete() {
                   <div className="flex-1">
                     <Kicker>{a.kind}</Kicker>
                     <h3 className="balance mt-1.5 text-[19px] font-bold leading-[1.22]">
-                      <a href="#" className="hover:text-[#4b4b4b]">{a.title}</a>
+                      <a href={a.url} className="hover:text-[#4b4b4b]">{a.title}</a>
                     </h3>
                     <p className="mt-2 text-[14.5px] leading-[1.45] text-[#363636]">{a.dek}</p>
                   </div>
@@ -130,7 +131,7 @@ export default function Gazete() {
                   <div className="flex-1">
                     <p className={`${F} text-[11px] font-bold uppercase tracking-[0.06em] text-[#555]`}>{author.name}</p>
                     <h3 className="balance mt-1 text-[18px] font-bold leading-[1.2]">
-                      <a href="#" className="hover:text-[#4b4b4b]">{c.title}</a>
+                      <a href={c.url} className="hover:text-[#4b4b4b]">{c.title}</a>
                     </h3>
                   </div>
                   <Portrait small font={D} bg="#e8e6e1" fg="#121212" className="h-14 w-14 shrink-0 rounded-full" />
@@ -177,7 +178,7 @@ export default function Gazete() {
                 <img src={img(d.img, 600, 400, true)} alt="" className="aspect-[3/2] w-full object-cover" />
                 <p className="mt-2.5 text-[19px] font-bold group-hover:underline">{d.title}</p>
                 <p className={`${F} mt-0.5 text-[11px] uppercase tracking-[0.06em] text-[#727272]`}>
-                  {d.count} haber · {d.years}
+                  {d.count} yazı · {d.years}
                 </p>
               </a>
             ))}
@@ -194,7 +195,7 @@ export default function Gazete() {
             <p className="pretty mt-4 text-[17px] leading-[1.6] text-[#333]">{author.longBio}</p>
           </div>
           <div className={`${F} text-[13px] md:col-span-3 md:border-l md:border-[#dfdfdf] md:pl-6`}>
-            {[["Haber & analiz", "1.240+"], ["Canlı yayın", "380+"], ["Sahadan ülke", "17"]].map(([k, v]) => (
+            {dossiers.slice(0, 3).map((d) => [`${d.title} yazıları`, String(d.count)]).map(([k, v]) => (
               <div key={k} className="border-b border-[#e2e2e2] py-3 last:border-0">
                 <p className={`${D} tnum text-[30px] font-bold leading-none text-[#121212]`}>{v}</p>
                 <p className="mt-1 uppercase tracking-[0.06em] text-[#727272]">{k}</p>

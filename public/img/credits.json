@@ -100,5 +100,35 @@
     "artist": "Maksym Kozlenko",
     "license": "CC BY-SA 3.0",
     "source": "https://commons.wikimedia.org/wiki/File:Sviatoslava_Khorobroho_Street,_Kyiv.jpg"
+  },
+  "election": {
+    "title": "File:2023 Turkish presidential elections abroad ballot boxes (round 2).jpg",
+    "artist": "Voice of America",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:2023_Turkish_presidential_elections_abroad_ballot_boxes_(round_2).jpg"
+  },
+  "sudan": {
+    "title": "File:Iss064e004061 (Nov 11, 2020) --- This nighttime shot from the International Space Station shows Khartoum, the capital of Sudan, surrounded by the Nile, Blue Nile and White Nile Rivers.jpg",
+    "artist": "NASA Johnson Space Center / VIV",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Iss064e004061_(Nov_11,_2020)_---_This_nighttime_shot_from_the_International_Space_Station_shows_Khartoum,_the_capital_of_Sudan,_surrounded_by_the_Nile,_Blue_Nile_and_White_Nile_Rivers.jpg"
+  },
+  "quake": {
+    "title": "File:Aerial View of Antakya after the 7.8 magnitude earthquake that occurred in Turkey 2.jpg",
+    "artist": "Orhan Erkılıç (VOA)",
+    "license": "Public domain",
+    "source": "https://commons.wikimedia.org/wiki/File:Aerial_View_of_Antakya_after_the_7.8_magnitude_earthquake_that_occurred_in_Turkey_2.jpg"
+  },
+  "tbmm": {
+    "title": "File:Ankara asv2021-10 img73 Republic Museum.jpg",
+    "artist": "A.Savin",
+    "license": "FAL",
+    "source": "https://commons.wikimedia.org/wiki/File:Ankara_asv2021-10_img73_Republic_Museum.jpg"
+  },
+  "europe": {
+    "title": "File:Söderströmsbron and the old town, Stockholm, Photo 1.jpg",
+    "artist": "Liberaler Humanist",
+    "license": "CC BY-SA 3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:S%C3%B6derstr%C3%B6msbron_and_the_old_town,_Stockholm,_Photo_1.jpg"
   }
 }

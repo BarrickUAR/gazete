@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Barlow } from "next/font/google";
 import { LiveClock } from "@/components/live-clock";
-import { author, lead, articles, appearances, img } from "@/lib/mock";
+import { author, lead, articles, appearances, dossiers, img } from "@/lib/mock";
 
 const cond = Barlow_Condensed({ subsets: ["latin", "latin-ext"], weight: ["500", "600", "700", "800"], variable: "--f-bc" });
 const barlow = Barlow({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600"], variable: "--f-b" });
@@ -26,17 +26,17 @@ const schedule = [
   { t: "07:00", p: "Güne Bakış", s: "Sabah gündemi" },
   { t: "13:00", p: "Öğle Bülteni", s: "Bölge masası" },
   { t: "19:00", p: "Ana Haber", s: "Dış politika bölümü" },
-  { t: "21:30", p: "Dünya Gündemi", s: "NATO zirvesi özel", now: true },
-  { t: "23:45", p: "Gece Masası", s: "Kafkasya dosyası" },
+  { t: "21:30", p: "Dünya Gündemi", s: "Seçim sonrası dış politika", now: true },
+  { t: "23:45", p: "Gece Masası", s: "Bölge masası" },
 ];
 
 export default function Studyo() {
   const ticker = [lead, ...articles].map((a) => a.title);
   const episodes = [
-    { ...appearances[0], img: "summit-hall", ep: "B.142" },
-    { ...appearances[1], img: "winter-city", ep: "B.141" },
-    { ...appearances[2], img: "sea-platform", ep: "B.140" },
-    { ...appearances[3], img: "railway-mountain", ep: "B.139" },
+    { ...appearances[0], img: "election", ep: "B.142" },
+    { ...appearances[1], img: "quake", ep: "B.141" },
+    { ...appearances[2], img: "flags-row", ep: "B.140" },
+    { ...appearances[3], img: "sudan", ep: "B.139" },
   ];
 
   return (
@@ -69,7 +69,7 @@ export default function Studyo() {
             {/* köşe grafikleri */}
             <div className={`${C} absolute left-4 top-4 flex items-center text-[15px] font-bold tracking-[0.08em]`}>
               <span className="px-2.5 py-1" style={{ background: RED }}>Canlı</span>
-              <span className="bg-black/70 px-2.5 py-1">Brüksel</span>
+              <span className="bg-black/70 px-2.5 py-1">Stüdyo</span>
             </div>
             <div className={`${C} absolute right-4 top-4 bg-black/70 px-2.5 py-1 text-[15px] font-semibold tracking-[0.08em]`}>
               <LiveClock seconds={false} />
@@ -81,7 +81,7 @@ export default function Studyo() {
             <div className="absolute bottom-5 left-0 right-6 sm:bottom-8 sm:right-auto sm:max-w-[80%]">
               <div className="flex items-stretch">
                 <span className={`${C} flex items-center px-3 text-[13px] font-bold tracking-[0.1em] sm:px-4 sm:text-[15px]`} style={{ background: RED }}>Özel</span>
-                <span className={`${C} bg-white px-3 py-1.5 text-[22px] font-bold leading-none text-[#070f1e] sm:px-4 sm:py-2 sm:text-[34px]`}>NATO zirvesi: Yeni savunma eşiği</span>
+                <span className={`${C} bg-white px-3 py-1.5 text-[22px] font-bold leading-none text-[#070f1e] sm:px-4 sm:py-2 sm:text-[34px]`}>Seçim sonrası dış politika</span>
               </div>
               <div className={`${C} inline-block px-3 py-1 text-[13px] font-bold tracking-[0.06em] text-[#070f1e] sm:px-4 sm:text-[16px]`} style={{ background: AMBER }}>
                 {author.name} · Dış Politika Koordinatörü
@@ -161,13 +161,13 @@ export default function Studyo() {
           <article className="group lg:col-span-6">
             <img src={img(lead.img, 1200, 700)} alt="" className="aspect-[16/9] w-full object-cover" />
             <p className={`${C} mt-4 text-[14px] font-bold tracking-[0.08em]`} style={{ color: RED }}>{lead.section} · {lead.kind}</p>
-            <h3 className={`${C} balance mt-1.5 text-[38px] font-bold leading-[1] group-hover:underline`}><a href="#">{lead.title}</a></h3>
+            <h3 className={`${C} balance mt-1.5 text-[38px] font-bold leading-[1] group-hover:underline`}><a href={lead.url}>{lead.title}</a></h3>
             <p className="pretty mt-3 text-[16px] leading-[1.6] text-white/70">{lead.dek}</p>
           </article>
           <ul className="lg:col-span-6">
             {articles.slice(0, 5).map((a) => (
               <li key={a.slug}>
-                <a href="#" className="group grid grid-cols-[96px_1fr] gap-4 border-b border-white/10 py-4 first:pt-0 sm:grid-cols-[140px_1fr]">
+                <a href={a.url} className="group grid grid-cols-[96px_1fr] gap-4 border-b border-white/10 py-4 first:pt-0 sm:grid-cols-[140px_1fr]">
                   <img src={img(a.img, 300, 200)} alt="" className="aspect-[3/2] w-full object-cover" />
                   <span>
                     <span className={`${C} block text-[13px] font-bold tracking-[0.08em]`} style={{ color: AMBER }}>{a.kind} · {a.date}</span>
@@ -183,7 +183,7 @@ export default function Studyo() {
       {/* rakamlar */}
       <section className="mt-16 border-y border-white/10" style={{ background: PANEL }}>
         <div className="mx-auto grid max-w-[1360px] grid-cols-2 lg:grid-cols-4">
-          {[["380+", "Canlı yayın"], ["17", "Ülkeden bağlantı"], ["1.240+", "Haber & analiz"], ["15+", "Yıl ekranda"]].map(([v, k], i) => (
+          {dossiers.map((d) => [String(d.count), `${d.title} yazısı`]).map(([v, k], i) => (
             <div key={k} className={`px-5 py-8 lg:px-8 ${i > 0 ? "border-l border-white/10" : ""} ${i > 1 ? "border-t border-white/10 lg:border-t-0" : ""}`}>
               <p className={`${C} tnum text-[60px] font-extrabold leading-none`}>{v}</p>
               <p className={`${C} mt-2 text-[15px] font-semibold tracking-[0.08em] text-white/50`}>{k}</p>

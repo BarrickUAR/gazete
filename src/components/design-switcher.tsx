@@ -2,14 +2,18 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { designs } from "@/lib/designs";
 
 export function DesignSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
-  const [embedded, setEmbedded] = useState(false);
-  useEffect(() => setEmbedded(window.self !== window.top), []);
+  // Seçim sayfasındaki önizleme iframe'lerinde çubuk gizlenir.
+  const embedded = useSyncExternalStore(
+    () => () => {},
+    () => window.self !== window.top || window.location.search.includes("onizleme"),
+    () => false,
+  );
   const i = designs.findIndex((d) => d.href === pathname);
   const prev = designs[(i - 1 + designs.length) % designs.length];
   const next = designs[(i + 1) % designs.length];

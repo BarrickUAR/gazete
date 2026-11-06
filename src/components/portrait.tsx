@@ -1,23 +1,36 @@
-// Gerçek portre gelene kadar yer tutucu: monogram + etiket.
+// Çetiner Çetin portresi. small = yüze yakın yuvarlak kesim (avatar).
 export function Portrait({
   className = "",
-  bg = "#d9d6cf",
-  fg = "#1d1a16",
-  font = "",
+  bg = "#c9cccf",
   small = false,
+  gray = false,
 }: {
   className?: string;
   bg?: string;
   fg?: string;
   font?: string;
   small?: boolean;
+  gray?: boolean;
 }) {
+  if (small) {
+    return (
+      <div
+        role="img"
+        aria-label="Çetiner Çetin"
+        className={`overflow-hidden ${gray ? "grayscale" : ""} ${className}`}
+        style={{
+          backgroundColor: bg,
+          backgroundImage: "url(/img/portrait.jpg)",
+          backgroundSize: "260%",
+          backgroundPosition: "52% 13%",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+    );
+  }
   return (
-    <div className={`relative grid place-items-center overflow-hidden ${className}`} style={{ background: bg, color: fg }} aria-label="Portre fotoğrafı">
-      <span className={`${font} italic leading-none opacity-80 ${small ? "text-[15px]" : "text-[72px]"}`}>ÇÇ</span>
-      {!small && (
-        <span className="absolute bottom-3 left-0 right-0 text-center font-sans text-[10px] uppercase tracking-[0.2em] opacity-50">Portre fotoğrafı</span>
-      )}
+    <div className={`overflow-hidden ${className}`} style={{ background: bg }}>
+      <img src="/img/portrait.jpg" alt="Çetiner Çetin" className={`h-full w-full object-cover object-top ${gray ? "grayscale" : ""}`} />
     </div>
   );
 }

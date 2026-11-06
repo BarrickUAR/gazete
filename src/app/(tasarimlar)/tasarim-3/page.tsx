@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Newsreader, DM_Sans } from "next/font/google";
 import { Portrait } from "@/components/portrait";
-import { author, articles, columns, appearances, img } from "@/lib/mock";
+import { author, lead, articles, columns, appearances, img } from "@/lib/mock";
 
 const nr = Newsreader({ subsets: ["latin", "latin-ext"], weight: ["300", "400", "500", "600"], style: ["normal", "italic"], variable: "--f-nr" });
 const dm = DM_Sans({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600"], variable: "--f-dm" });
@@ -18,9 +18,10 @@ function Small({ children, className = "" }: { children: React.ReactNode; classN
 }
 
 export default function KoseYazari() {
-  const latest = columns[0];
-  const index = [...columns.slice(1), articles[3], articles[6], articles[5], articles[2]];
-  const news = [articles[0], articles[4], articles[7]];
+  const latest = articles[0];
+  const index = [...columns, articles[3], articles[6], articles[7]];
+  const news = [lead, articles[2], articles[4]];
+  const featured = articles[1];
 
   return (
     <div className={`${nr.variable} ${dm.variable} ${SERIF} min-h-screen bg-[#f5f0e6]`} style={{ color: INK }}>
@@ -56,16 +57,8 @@ export default function KoseYazari() {
           <article className="lg:col-span-7 lg:pt-4">
             <Small className="!text-[#8a2e1e]">Son yazı · {latest.date}</Small>
             <h1 className="balance mt-4 text-[46px] font-normal leading-[1.04] tracking-[-0.02em] sm:text-[64px]">{latest.title}</h1>
-            <p className="mt-5 text-[23px] font-light italic leading-[1.4] text-[#4a4239]">{latest.dek}</p>
-            <div className="mt-8 max-w-[62ch] space-y-5 text-[19px] leading-[1.7]">
-              <p className="dropcap pretty">
-                Ankara&apos;da bir kış akşamı, dışişlerinin arka koridorlarında hiçbir kameranın kaydetmediği bir görüşme yapıldı. Ertesi sabah gazetelerde tek satır yoktu; ama üç ay sonra masaya konan uzlaşının ilk cümlesi o akşam yazılmıştı.
-              </p>
-              <p className="pretty text-[#3a332b]">
-                Diplomaside görünürlük çoğu zaman bir maliyettir. Ekranda verilen her mesaj, masada kaybedilen bir manevra alanı demek. Sessiz diplomasi ise sabır, güven ve en çok da zaman ister&hellip;
-              </p>
-            </div>
-            <a href="#" className={`${SANS} mt-8 inline-flex items-center gap-2 border-b border-[#1d1a16] pb-1 text-[14px] font-semibold`}>
+            <p className="dropcap pretty mt-8 max-w-[56ch] text-[22px] font-light leading-[1.6] text-[#3a332b]">{latest.dek}</p>
+            <a href={latest.url} className={`${SANS} mt-8 inline-flex items-center gap-2 border-b border-[#1d1a16] pb-1 text-[14px] font-semibold`}>
               Yazının devamı <span aria-hidden>→</span>
             </a>
           </article>
@@ -75,12 +68,12 @@ export default function KoseYazari() {
         <section className="border-t border-[#1d1a16] py-14">
           <div className="flex items-baseline justify-between">
             <h2 className="text-[34px] italic">Yazılar</h2>
-            <a href="#" className={`${SANS} text-[13px] font-medium text-[#5c544a] hover:text-[#1d1a16]`}>Tüm arşiv (412)</a>
+            <a href="#" className={`${SANS} text-[13px] font-medium text-[#5c544a] hover:text-[#1d1a16]`}>Tüm yazılar</a>
           </div>
           <ol className="mt-8">
             {index.map((a, i) => (
               <li key={a.slug}>
-                <a href="#" className="group grid grid-cols-[2.5rem_1fr] gap-x-4 border-t border-[#1d1a16]/12 py-6 sm:grid-cols-[3rem_1fr_9rem]">
+                <a href={a.url} className="group grid grid-cols-[2.5rem_1fr] gap-x-4 border-t border-[#1d1a16]/12 py-6 sm:grid-cols-[3rem_1fr_9rem]">
                   <span className={`${SANS} tnum pt-2 text-[12px] text-[#9a8f80]`}>{String(i + 1).padStart(2, "0")}</span>
                   <span>
                     <span className="balance block text-[25px] leading-[1.2] transition-colors duration-150 group-hover:text-[#8a2e1e] sm:text-[28px]">{a.title}</span>
@@ -95,13 +88,13 @@ export default function KoseYazari() {
           </ol>
         </section>
 
-        {/* alıntı */}
+        {/* öne çıkan saha yazısı */}
         <section className="border-y border-[#1d1a16]/15 py-20 text-center">
-          <p className="text-[72px] leading-none" style={{ color: ACC }}>&ldquo;</p>
-          <blockquote className="balance mx-auto -mt-4 max-w-[26ch] text-[34px] font-light italic leading-[1.25] sm:text-[44px]">
-            Savaşı canlı yayında anlatmak, bir muhabirin taşıyabileceği en ağır yüktür.
-          </blockquote>
-          <Small className="mt-7">{columns[1].title} · {columns[1].date}</Small>
+          <Small className="!text-[#8a2e1e]">Sahadan · {featured.place} · {featured.date}</Small>
+          <a href={featured.url} className="balance mx-auto mt-6 block max-w-[20ch] text-[44px] font-light italic leading-[1.1] transition-colors duration-150 hover:text-[#8a2e1e] sm:text-[60px]">
+            {featured.title}
+          </a>
+          <p className="pretty mx-auto mt-6 max-w-[52ch] text-[19px] leading-[1.6] text-[#4a4239]">{featured.dek}</p>
         </section>
 
         {/* haber + ekran */}
@@ -113,7 +106,7 @@ export default function KoseYazari() {
                 <article key={a.slug}>
                   <img src={img(a.img, 600, 450)} alt="" className="aspect-[4/3] w-full object-cover sepia-[.15]" />
                   <p className={`${SANS} mt-4 text-[11.5px] font-medium uppercase tracking-[0.12em]`} style={{ color: ACC }}>{a.section}</p>
-                  <h3 className="balance mt-2 text-[21px] leading-[1.2]"><a href="#" className="hover:text-[#8a2e1e]">{a.title}</a></h3>
+                  <h3 className="balance mt-2 text-[21px] leading-[1.2]"><a href={a.url} className="hover:text-[#8a2e1e]">{a.title}</a></h3>
                   <p className={`${SANS} mt-2.5 text-[12px] text-[#7d7366]`}>{a.date} · {a.readMin} dk</p>
                 </article>
               ))}

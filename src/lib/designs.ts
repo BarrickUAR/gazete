@@ -63,4 +63,22 @@ export const designs: Design[] = [
     fonts: "Barlow Condensed / Barlow",
     swatch: ["#070f1e", "#ffffff", "#e5141b", "#ffc21a"],
   },
+  {
+    href: "/tasarim-7",
+    no: "07",
+    name: "Pembe Gazete",
+    tag: "FT tarzı · Somon kâğıt",
+    desc: "Somon zemin, bordo vurgu, yoğun ama sakin gazete ızgarası.",
+    fonts: "Literata / Hanken Grotesk",
+    swatch: ["#fff1e5", "#33302e", "#990f3d", "#0d7680"],
+  },
+  {
+    href: "/tasarim-8",
+    no: "08",
+    name: "Analiz Dergisi",
+    tag: "Dergi · Dış politika",
+    desc: "Lacivert kapak, Caslon başlıklar, 'Bu sayıda' içindekiler.",
+    fonts: "Libre Caslon / Work Sans",
+    swatch: ["#0f2440", "#f7f4ee", "#c4262e"],
+  },
 ];

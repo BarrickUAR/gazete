@@ -1,20 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+function subscribe(cb: () => void) {
+  const t = setInterval(cb, 1000);
+  return () => clearInterval(t);
+}
+
+const fmt = (seconds: boolean) =>
+  new Date().toLocaleTimeString("tr-TR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: seconds ? "2-digit" : undefined,
+    timeZone: "Europe/Istanbul",
+  });
 
 export function LiveClock({ seconds = true }: { seconds?: boolean }) {
-  const [now, setNow] = useState<string>("--:--");
-  useEffect(() => {
-    const fmt = () =>
-      new Date().toLocaleTimeString("tr-TR", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: seconds ? "2-digit" : undefined,
-        timeZone: "Europe/Istanbul",
-      });
-    setNow(fmt());
-    const t = setInterval(() => setNow(fmt()), 1000);
-    return () => clearInterval(t);
-  }, [seconds]);
+  const now = useSyncExternalStore(
+    subscribe,
+    () => fmt(seconds),
+    () => (seconds ? "--:--:--" : "--:--"),
+  );
   return <span className="tnum">{now}</span>;
 }

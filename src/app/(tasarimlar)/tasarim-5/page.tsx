@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk, Spectral } from "next/font/google";
 import { Portrait } from "@/components/portrait";
-import { author, lead, articles, columns, appearances, dossiers, img } from "@/lib/mock";
+import { author, lead as top0, articles, columns, appearances, dossiers, img } from "@/lib/mock";
 
 const grot = Schibsted_Grotesk({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700"], variable: "--f-sg" });
 const spec = Spectral({ subsets: ["latin", "latin-ext"], weight: ["300", "400"], style: ["normal", "italic"], variable: "--f-sp" });
@@ -14,17 +14,18 @@ const MUTED = "#6b7076";
 const LINE = "#e6e6e3";
 const ACC = "#1f5b45";
 
+// Habertürk'teki son 20 yazının konu dağılımı
 const filters = [
-  ["Tümü", 1240],
-  ["Haber", 612],
-  ["Analiz", 238],
-  ["Köşe yazısı", 156],
-  ["Saha notu", 94],
-  ["Video", 380],
+  ["Tümü", 20],
+  ["Seçim 2023", 7],
+  ["Dış politika", 6],
+  ["Suriye", 4],
+  ["Deprem", 3],
 ] as const;
 
 export default function Portfolyo() {
-  const feed = [...articles.slice(0, 2), columns[0], ...articles.slice(2, 6), columns[1]];
+  const lead = articles[3];
+  const feed = [articles[0], articles[1], columns[0], articles[2], top0, articles[4], articles[5], columns[1]];
 
   return (
     <div className={`${grot.variable} ${spec.variable} font-[family-name:var(--f-sg)] min-h-screen bg-white`} style={{ color: INK }}>
@@ -36,7 +37,7 @@ export default function Portfolyo() {
               <Portrait small font={SP} bg="#e4e4df" fg={INK} className="h-14 w-14 rounded-full" />
               <div>
                 <p className="text-[13px] font-medium" style={{ color: ACC }}>Gazeteci</p>
-                <p className="text-[13px]" style={{ color: MUTED }}>İstanbul</p>
+                <p className="text-[13px]" style={{ color: MUTED }}>{author.outlet}</p>
               </div>
             </div>
 
@@ -54,8 +55,8 @@ export default function Portfolyo() {
 
             <nav className="mt-8 hidden border-t lg:block" style={{ borderColor: LINE }}>
               {[
-                ["Yayınlar", "1.240"],
-                ["Ekranda", "380"],
+                ["Yazılar", "20"],
+                ["Ekranda", ""],
                 ["Dosyalar", "4"],
                 ["Hakkında", ""],
                 ["İletişim", ""],
@@ -83,7 +84,7 @@ export default function Portfolyo() {
         <main className="min-w-0 px-5 py-8 sm:px-8 lg:px-14 lg:py-10">
           {/* öne çıkan */}
           <p className="text-[13px] font-medium" style={{ color: MUTED }}>Öne çıkan · {lead.date}</p>
-          <a href="#" className="group mt-4 block">
+          <a href={lead.url} className="group mt-4 block">
             <div className="overflow-hidden rounded-lg">
               <img src={img(lead.img, 1600, 900)} alt="" className="aspect-[16/8] w-full object-cover transition-transform duration-200 group-hover:scale-[1.01]" />
             </div>
@@ -113,7 +114,7 @@ export default function Portfolyo() {
           <ul>
             {feed.map((a) => (
               <li key={a.slug}>
-                <a href="#" className="group grid grid-cols-[1fr_96px] gap-5 border-b py-6 sm:grid-cols-[110px_1fr_150px] sm:gap-8" style={{ borderColor: LINE }}>
+                <a href={a.url} className="group grid grid-cols-[1fr_96px] gap-5 border-b py-6 sm:grid-cols-[110px_1fr_150px] sm:gap-8" style={{ borderColor: LINE }}>
                   <div className="hidden sm:block">
                     <p className="tnum text-[13.5px] font-medium">{a.date.replace(" 2026", "")}</p>
                     <p className="mt-1 text-[12.5px]" style={{ color: MUTED }}>{a.readMin} dk</p>
@@ -146,7 +147,7 @@ export default function Portfolyo() {
               {appearances.map((x, i) => (
                 <a key={x.topic} href="#" className="group flex gap-4">
                   <div className="relative w-[44%] shrink-0 overflow-hidden rounded-md">
-                    <img src={img(["studio-tv", "winter-city", "sea-platform", "railway-mountain"][i], 480, 270)} alt="" className="aspect-video w-full object-cover" />
+                    <img src={img(["election", "quake", "flags-row", "sudan"][i], 480, 270)} alt="" className="aspect-video w-full object-cover" />
                     <span className="absolute bottom-1.5 right-1.5 rounded bg-black/75 px-1.5 py-0.5 text-[11px] font-semibold text-white">{x.dur}</span>
                   </div>
                   <div>
@@ -161,12 +162,11 @@ export default function Portfolyo() {
 
           {/* alıntı + dosyalar */}
           <section className="mt-20 grid gap-10 rounded-xl p-8 sm:p-10 xl:grid-cols-[1.2fr_1fr]" style={{ background: "#f3f5f2" }}>
-            <blockquote>
-              <p className={`${SP} text-[28px] font-light italic leading-[1.35] sm:text-[32px]`}>
-                &ldquo;{columns[1].dek}&rdquo;
-              </p>
-              <footer className="mt-5 text-[13.5px] font-medium" style={{ color: MUTED }}>{columns[1].title}</footer>
-            </blockquote>
+            <a href={columns[1].url} className="group block">
+              <p className="text-[13px] font-semibold" style={{ color: ACC }}>Köşe yazısı · {columns[1].date}</p>
+              <p className={`${SP} mt-3 text-[30px] font-light italic leading-[1.25] group-hover:text-[#1f5b45] sm:text-[36px]`}>{columns[1].title}</p>
+              <p className="mt-4 text-[15.5px] leading-[1.55]" style={{ color: "#4a4e53" }}>{columns[1].dek}</p>
+            </a>
             <div>
               <p className="text-[13px] font-semibold" style={{ color: ACC }}>Haber dosyaları</p>
               <ul className="mt-3">
@@ -174,7 +174,7 @@ export default function Portfolyo() {
                   <li key={d.title}>
                     <a href="#" className="group flex items-baseline justify-between border-b py-3 text-[17px] font-medium" style={{ borderColor: "#dfe3dd" }}>
                       <span className="group-hover:text-[#1f5b45]">{d.title}</span>
-                      <span className="tnum text-[13px] font-normal" style={{ color: MUTED }}>{d.count} haber</span>
+                      <span className="tnum text-[13px] font-normal" style={{ color: MUTED }}>{d.count} yazı</span>
                     </a>
                   </li>
                 ))}

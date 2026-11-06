@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Instrument_Serif, Inter_Tight } from "next/font/google";
 import { designs } from "@/lib/designs";
-import { LivePreview } from "@/components/live-preview";
+import Image from "next/image";
 
 const serif = Instrument_Serif({ subsets: ["latin", "latin-ext"], weight: "400", style: ["normal", "italic"], variable: "--f-is" });
 const sans = Inter_Tight({ subsets: ["latin", "latin-ext"], weight: ["400", "500"], variable: "--f-it" });
@@ -19,19 +19,19 @@ export default function Secim() {
           </p>
         </header>
 
-        <div className="mt-6 grid flex-1 gap-x-6 gap-y-7 sm:grid-cols-2 lg:mt-8 lg:grid-cols-3 lg:content-center">
+        <div className="mt-6 grid flex-1 gap-x-6 gap-y-7 sm:grid-cols-2 lg:mt-8 lg:grid-cols-4 lg:content-center">
           {designs.map((d) => (
             <Link key={d.href} href={d.href} className="group block">
               <div className="overflow-hidden rounded-lg ring-1 ring-white/10 transition-[box-shadow] duration-200 group-hover:ring-2 group-hover:ring-white/70">
-                <LivePreview src={d.href} title={d.name} />
+                <Image src={`/previews${d.href}.png`} alt={d.name} width={1440} height={900} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="aspect-[16/10] w-full bg-[#1c1c1a] object-cover object-top" priority={d.no <= "04"} />
               </div>
               <div className="mt-3 flex items-baseline justify-between gap-4">
                 <p className="flex items-baseline gap-3">
                   <span className="tabular-nums text-[12px] text-[#f1efe9]/40">{d.no}</span>
-                  <span className="font-[family-name:var(--f-is)] text-[24px] leading-none">{d.name}</span>
+                  <span className="font-[family-name:var(--f-is)] text-[22px] leading-none">{d.name}</span>
                 </p>
                 <span className="flex items-center gap-3 text-[12.5px] text-[#f1efe9]/45">
-                  <span className="hidden xl:inline">{d.tag}</span>
+                  <span className="hidden 2xl:inline">{d.tag}</span>
                   <span className="flex -space-x-1">
                     {d.swatch.map((c) => (
                       <span key={c} className="h-3.5 w-3.5 rounded-full ring-1 ring-[#0f0f0e]" style={{ background: c }} />

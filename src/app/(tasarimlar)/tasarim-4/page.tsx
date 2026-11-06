@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans, Noto_Serif } from "next/font/google";
 import { Portrait } from "@/components/portrait";
-import { author, lead, articles, columns, appearances, sections, img } from "@/lib/mock";
+import { author, lead as a3, articles, columns, appearances, sections, img } from "@/lib/mock";
 
 const sans = Noto_Sans({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700", "800"], variable: "--f-ns" });
 const serif = Noto_Serif({ subsets: ["latin", "latin-ext"], weight: ["400", "700"], style: ["normal", "italic"], variable: "--f-nsf" });
@@ -33,15 +33,15 @@ function Meta({ time, section }: { time: string; section: string }) {
   );
 }
 
-function Card({ a, time, size = "md" }: { a: (typeof articles)[number]; time: string; size?: "sm" | "md" }) {
+function Card({ a, size = "md" }: { a: (typeof articles)[number]; size?: "sm" | "md" }) {
   return (
     <article className="group">
       <img src={img(a.img, 800, 450)} alt="" className="aspect-video w-full object-cover" />
       <h3 className={`balance mt-3 font-bold leading-[1.22] group-hover:underline ${size === "sm" ? "text-[17px]" : "text-[19px]"}`}>
-        <a href="#">{a.title}</a>
+        <a href={a.url}>{a.title}</a>
       </h3>
       {size === "md" && <p className="mt-2 text-[15px] leading-[1.45] text-[#3f3f42]">{a.dek}</p>}
-      <Meta time={time} section={a.section} />
+      <Meta time={a.date} section={a.section} />
     </article>
   );
 }
@@ -56,8 +56,7 @@ function SectionHead({ title, dark = false }: { title: string; dark?: boolean })
 }
 
 export default function Yayin() {
-  const [a1, a2, a3, a4, a5, a6, a7, a8] = articles;
-  const times = ["2 saat önce", "5 saat önce", "Dün", "2 gün önce", "3 gün önce", "5 gün önce"];
+  const [a1, a2, lead, a4, a5, a6, a7, a8] = articles;
 
   return (
     <div className={`${sans.variable} ${serif.variable} font-[family-name:var(--f-ns)] bg-white text-[#141414]`}>
@@ -91,37 +90,37 @@ export default function Yayin() {
         <section className="grid gap-6 lg:grid-cols-12">
           <div className="order-2 flex flex-col gap-6 lg:order-1 lg:col-span-3 lg:border-r lg:border-[#e0e0e0] lg:pr-6">
             <article className="group">
-              <p className="mb-2 inline-flex items-center gap-1.5 text-[12px] font-extrabold uppercase" style={{ color: RED }}>Canlı</p>
-              <h3 className="balance text-[19px] font-bold leading-[1.22] group-hover:underline"><a href="#">NATO zirvesi ikinci gün: Liderler ortak bildiri üzerinde uzlaştı</a></h3>
-              <p className="mt-2 text-[15px] leading-[1.45] text-[#3f3f42]">Brüksel'den son gelişmeler ve kulis bilgileri dakika dakika.</p>
-              <Meta time="12 dk önce" section="Güvenlik" />
+              <p className="mb-2 inline-flex items-center gap-1.5 text-[12px] font-extrabold uppercase" style={{ color: RED }}>Sahadan · {a2.place}</p>
+              <h3 className="balance text-[19px] font-bold leading-[1.22] group-hover:underline"><a href={a2.url}>{a2.title}</a></h3>
+              <p className="mt-2 text-[15px] leading-[1.45] text-[#3f3f42]">{a2.dek}</p>
+              <Meta time={a2.date} section={a2.section} />
             </article>
             <div className="border-t border-[#e0e0e0] pt-6">
-              <Card a={a5} time={times[3]} size="sm" />
+              <Card a={a5} size="sm" />
             </div>
           </div>
 
           <article className="group order-1 lg:order-2 lg:col-span-6">
-            <img src={img(lead.img, 1400, 788)} alt="" className="aspect-video w-full object-cover" />
+            <img src={img(a3.img, 1400, 788)} alt="" className="aspect-video w-full object-cover" />
             <h1 className="balance mt-4 text-[28px] font-extrabold leading-[1.15] tracking-[-0.01em] group-hover:underline sm:text-[34px]">
-              <a href="#">{lead.title}</a>
+              <a href={a3.url}>{a3.title}</a>
             </h1>
-            <p className="pretty mt-3 text-[17px] leading-[1.5] text-[#3f3f42]">{lead.dek}</p>
-            <Meta time="1 saat önce" section={lead.section} />
+            <p className="pretty mt-3 text-[17px] leading-[1.5] text-[#3f3f42]">{a3.dek}</p>
+            <Meta time={a3.date} section={a3.section} />
           </article>
 
           <div className="order-3 flex flex-col gap-6 lg:col-span-3 lg:border-l lg:border-[#e0e0e0] lg:pl-6">
-            <Card a={a1} time={times[0]} size="sm" />
+            <Card a={a1} size="sm" />
             <div className="border-t border-[#e0e0e0] pt-6">
-              <Card a={a2} time={times[1]} size="sm" />
+              <Card a={lead} size="sm" />
             </div>
           </div>
         </section>
 
         {/* yatay şerit */}
         <section className="mt-8 grid gap-6 border-t border-[#e0e0e0] pt-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[a3, a6, a7, a8].map((a, i) => (
-            <Card key={a.slug} a={a} time={times[i + 2] ?? "Geçen hafta"} size="sm" />
+          {[a4, a6, a7, a8].map((a) => (
+            <Card key={a.slug} a={a} size="sm" />
           ))}
         </section>
 
@@ -136,7 +135,7 @@ export default function Yayin() {
                     <Portrait small font={SERIF} bg="#ebebeb" fg="#141414" className="h-10 w-10 rounded-full" />
                     <p className="text-[13px] font-bold">{author.name}</p>
                   </div>
-                  <h3 className={`${SERIF} balance mt-3 text-[20px] font-bold leading-[1.25] group-hover:underline`}><a href="#">{c.title}</a></h3>
+                  <h3 className={`${SERIF} balance mt-3 text-[20px] font-bold leading-[1.25] group-hover:underline`}><a href={c.url}>{c.title}</a></h3>
                   <p className="mt-2 text-[14.5px] leading-[1.45] text-[#3f3f42]">{c.dek}</p>
                   <p className="mt-2.5 text-[12.5px] text-[#545658]">{c.date}</p>
                 </article>
@@ -144,12 +143,12 @@ export default function Yayin() {
             </div>
           </div>
           <aside className="lg:col-span-4">
-            <SectionHead title="En çok okunan" />
+            <SectionHead title="Editörün seçtikleri" />
             <ol className="mt-2">
-              {[a2, lead, a1, a5, a4].map((a, i) => (
+              {[a2, a3, a1, a5, lead].map((a, i) => (
                 <li key={a.slug} className="flex gap-4 border-b border-[#e0e0e0] py-3.5 last:border-0">
                   <span className="tnum w-7 shrink-0 text-[34px] font-light leading-none" style={{ color: RED }}>{i + 1}</span>
-                  <a href="#" className="text-[15.5px] font-bold leading-snug hover:underline">{a.title}</a>
+                  <a href={a.url} className="text-[15.5px] font-bold leading-snug hover:underline">{a.title}</a>
                 </li>
               ))}
             </ol>
@@ -165,7 +164,7 @@ export default function Yayin() {
             {appearances.map((x, i) => (
               <a key={x.topic} href="#" className="group">
                 <div className="relative">
-                  <img src={img(["studio-tv", "winter-city", "sea-platform", "railway-mountain"][i], 640, 360)} alt="" className="aspect-video w-full object-cover" />
+                  <img src={img(["election", "quake", "flags-row", "sudan"][i], 640, 360)} alt="" className="aspect-video w-full object-cover" />
                   <span className="absolute bottom-0 left-0 flex items-center gap-1.5 bg-black px-2.5 py-1.5 text-[12px] font-bold">
                     <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor" aria-hidden><path d="M8 5.5v13l10.5-6.5z" /></svg>
                     {x.dur}
