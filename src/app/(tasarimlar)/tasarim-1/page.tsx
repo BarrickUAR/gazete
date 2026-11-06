@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Source_Serif_4, Libre_Franklin } from "next/font/google";
+import { UnifrakturMaguntia, Gelasio, Libre_Franklin } from "next/font/google";
 import { Portrait } from "@/components/portrait";
 import { author, lead, articles, columns, appearances, dossiers, sections, img } from "@/lib/mock";
 
-const display = Playfair_Display({ subsets: ["latin", "latin-ext"], weight: ["700", "800", "900"], variable: "--f-display" });
-const serif = Source_Serif_4({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700"], style: ["normal", "italic"], variable: "--f-serif" });
+// NYT ailesi: masthead blackletter · Cheltenham/Imperial yerine Georgia-metrik Gelasio · NYT Franklin yerine Libre Franklin
+const mast = UnifrakturMaguntia({ subsets: ["latin"], weight: "400", variable: "--f-mast" });
+const serif = Gelasio({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700"], style: ["normal", "italic"], variable: "--f-serif" });
 const sans = Libre_Franklin({ subsets: ["latin", "latin-ext"], weight: ["400", "500", "600", "700", "800"], variable: "--f-sans" });
 
 export const metadata: Metadata = { title: "Tasarım 1 · Gazete — Çetiner Çetin" };
 
-const D = "font-[family-name:var(--f-display)]";
+const M = "font-[family-name:var(--f-mast)]";
+const D = "font-[family-name:var(--f-serif)]";
 const S = "font-[family-name:var(--f-serif)]";
 const F = "font-[family-name:var(--f-sans)]";
 
@@ -28,7 +30,7 @@ function Meta({ a }: { a: { date: string; readMin: number } }) {
 export default function Gazete() {
   const [a1, a2, a3, a4, a5, a6] = articles;
   return (
-    <div className={`${display.variable} ${serif.variable} ${sans.variable} ${S} bg-white text-[#121212]`}>
+    <div className={`${mast.variable} ${serif.variable} ${sans.variable} ${S} bg-white text-[#121212]`}>
       {/* üst şerit */}
       <div className={`${F} border-b border-[#e2e2e2] text-[11px]`}>
         <div className="mx-auto flex max-w-[1240px] items-center justify-between px-5 py-2">
@@ -43,7 +45,7 @@ export default function Gazete() {
       {/* masthead */}
       <header className="mx-auto max-w-[1240px] px-5">
         <div className="pb-3 pt-7 text-center">
-          <h1 className={`${D} text-[44px] font-black leading-none tracking-[-0.01em] sm:text-[76px] lg:text-[92px]`}>
+          <h1 className={`${M} text-[46px] font-normal leading-none sm:text-[80px] lg:text-[96px]`}>
             Çetiner Çetin
           </h1>
           <p className={`${S} mt-3 text-[15px] italic text-[#444]`}>
@@ -205,7 +207,7 @@ export default function Gazete() {
 
       <footer className={`${F} border-t border-[#121212] bg-white`}>
         <div className="mx-auto flex max-w-[1240px] flex-col items-center justify-between gap-3 px-5 py-6 text-[12px] text-[#555] sm:flex-row">
-          <span className={`${D} text-[22px] font-black text-[#121212]`}>Çetiner Çetin</span>
+          <span className={`${M} text-[26px] text-[#121212]`}>Çetiner Çetin</span>
           <span>© 2026 · Tüm hakları saklıdır · İletişim · RSS</span>
         </div>
       </footer>
