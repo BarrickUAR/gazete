@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "tsx scripts/seed.ts",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "role": "tsx scripts/set-role.ts",
+    "test-user": "tsx scripts/test-user.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

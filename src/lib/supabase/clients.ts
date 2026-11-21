@@ -9,11 +9,15 @@ const SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 export const hasSupabase = () => Boolean(URL && ANON);
 export const hasServiceRole = () => Boolean(URL && SERVICE);
 
+/** Herkese açık içerik okumalarının önbellek etiketi. Yayın/düzenlemede updateTag/revalidateTag ile anında boşaltılır. */
+export const CONTENT_TAG = "content";
+const taggedFetch: typeof fetch = (input, init) => fetch(input, { ...init, next: { revalidate: 300, tags: [CONTENT_TAG] } } as RequestInit);
+
 let anon: SupabaseClient | null = null;
 /** Çerezsiz, herkese açık okuma istemcisi. ISR/statik sayfalarda kullanılır (RLS: yalnız yayındaki içerik). */
 export function anonClient() {
   if (!hasSupabase()) throw new Error("Supabase yapılandırılmadı");
-  anon ??= createClient(URL, ANON, { auth: { persistSession: false, autoRefreshToken: false } });
+  anon ??= createClient(URL, ANON, { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: taggedFetch } });
   return anon;
 }
 

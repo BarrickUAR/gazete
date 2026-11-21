@@ -6,13 +6,13 @@ import type { ListQuery, Repo } from "./repo";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const CAT = "id,theme,sort,category_translations(locale,slug,name)";
-const BASE = `id,type,status,is_premium,published_at,publish_at,updated_at,read_min,source_url,report_pdf,
+export const CAT = "id,theme,sort,category_translations(locale,slug,name)";
+export const BASE = `id,type,status,is_premium,published_at,publish_at,updated_at,read_min,source_url,report_pdf,
   author:authors(id,name,role,avatar),
   cover:media(id,url,alt,caption,credit,width,height),
   post_tags(tag:tags(id,slug,name))`;
 const TX_LIST = "locale,slug,title,dek,kicker,place,seo_title,seo_desc";
-const TX_FULL = "locale,slug,title,dek,kicker,place,body,seo_title,seo_desc";
+export const TX_FULL = "locale,slug,title,dek,kicker,place,body,seo_title,seo_desc";
 
 const searchConfig: Record<Locale, string> = { tr: "turkish", en: "english", ar: "simple" };
 
@@ -60,8 +60,9 @@ export function mapPost(r: any): Post {
   };
 }
 
-function visibleFilter<T extends { in: any; lte: any }>(q: T): T {
-  return q.in("status", ["published", "scheduled"]).lte("published_at", new Date().toISOString());
+// Zaman koşulu (yayın anı geldi mi) RLS'te post_is_public ile veritabanı saatine göre uygulanır.
+function visibleFilter<T extends { in: any }>(q: T): T {
+  return q.in("status", ["published", "scheduled"]);
 }
 
 export const dbRepo: Repo = {

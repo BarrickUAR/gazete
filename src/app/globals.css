@@ -246,7 +246,55 @@ details.menu > summary::-webkit-details-marker {
 }
 
 @media print {
-  .no-print {
+  .no-print,
+  .t-admin > aside {
     display: none !important;
   }
+  .t-admin {
+    display: block !important;
+    background: #fff;
+  }
+  * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+/* ── Yönetim paneli (açık, yoğun, sade) ───────────────────────── */
+.t-admin {
+  --bg: #f6f7f9;
+  --bg-2: #ffffff;
+  --bg-3: #eef0f3;
+  --fg: #14171c;
+  --fg-2: #2b3038;
+  --fg-3: #4b525d;
+  --muted: #6b7280;
+  --line: #e3e6eb;
+  --line-2: #cfd4db;
+  --accent: #1f5fbf;
+  --accent-fg: #ffffff;
+  --head: #14171c;
+  --invert-bg: #14171c;
+  --invert-fg: #ffffff;
+  --ff-display: var(--f-plex), var(--f-plexar), system-ui, sans-serif;
+  --ff-body: var(--f-plex), var(--f-plexar), system-ui, sans-serif;
+  --ff-label: var(--f-plex), system-ui, sans-serif;
+  --ff-mono: var(--f-mono), ui-monospace, monospace;
+  --ff-ui: var(--f-plex), system-ui, sans-serif;
+  color-scheme: light;
+}
+.t-admin .ProseMirror {
+  min-height: 220px;
+  outline: none;
+}
+.t-admin .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: inline-start;
+  color: var(--muted);
+  pointer-events: none;
+  height: 0;
+}
+.t-admin .prose-news {
+  font-size: 16px;
+  line-height: 1.7;
 }

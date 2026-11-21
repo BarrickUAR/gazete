@@ -4,14 +4,14 @@ import { getDict } from "@/i18n/dict";
 import { href } from "@/i18n/routes";
 import { Breadcrumbs, Cover } from "@/components/ui";
 import { fmtDate, postHref } from "@/lib/site";
-import type { LocalizedPost } from "@/lib/types";
+import type { LocalizedPost, RichDoc } from "@/lib/types";
 import { ArticleBody, Byline, ReportTools, Toc } from "../article-parts";
 
 export function Caps({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <p className={`font-label text-[12.5px] font-semibold uppercase tracking-[0.1em] ${className}`}>{children}</p>;
 }
 
-export function ForeignArticle({ lang, post, related }: { lang: Locale; post: LocalizedPost; related: LocalizedPost[] }) {
+export function ForeignArticle({ lang, post, related, premium }: { lang: Locale; post: LocalizedPost; related: LocalizedPost[]; premium?: RichDoc | null }) {
   const d = getDict(lang);
   return (
     <article>
@@ -67,7 +67,7 @@ export function ForeignArticle({ lang, post, related }: { lang: Locale; post: Lo
           </div>
         </aside>
         <div className="order-1 max-w-[68ch] text-[19px] lg:order-2 lg:col-span-7 [&_.prose-news]:text-[19px] [&_.prose-news]:leading-[1.7]">
-          <ArticleBody lang={lang} post={post} dropcap />
+          <ArticleBody lang={lang} post={post} dropcap premium={premium} />
         </div>
       </div>
 

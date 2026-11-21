@@ -1,17 +1,12 @@
-import { headers } from "next/headers";
-import { isLocale, type Locale } from "@/i18n/config";
+import { locales, type Locale } from "@/i18n/config";
 import { getDict } from "@/i18n/dict";
 import { href } from "@/i18n/routes";
+import { PickLocale } from "@/components/pick-locale";
 import { Shell } from "@/components/shell";
 import { Container } from "@/components/ui";
 import { staticAlternates } from "@/lib/site";
 
-export default async function NotFound() {
-  // not-found params almaz; dili istek yolundan çıkar.
-  const h = await headers();
-  const path = h.get("x-invoke-path") ?? h.get("next-url") ?? h.get("referer") ?? "";
-  const first = path.replace(/^https?:\/\/[^/]+/, "").split("/")[1] ?? "";
-  const lang: Locale = isLocale(first) ? first : "tr";
+function View({ lang }: { lang: Locale }) {
   const d = getDict(lang);
   return (
     <Shell lang={lang} alternates={staticAlternates()}>
@@ -26,4 +21,10 @@ export default async function NotFound() {
       </Container>
     </Shell>
   );
+}
+
+// not-found params almaz; headers() de çağırmayız (tüm [lang] sayfalarını dinamik yapar). Dil istemci yolundan seçilir.
+export default function NotFound() {
+  const views = Object.fromEntries(locales.map((l) => [l, <View key={l} lang={l} />])) as Record<Locale, React.ReactNode>;
+  return <PickLocale views={views} />;
 }

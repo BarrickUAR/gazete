@@ -4,10 +4,10 @@ import { getDict } from "@/i18n/dict";
 import { href } from "@/i18n/routes";
 import { Breadcrumbs, Container, Cover, Label, PostCard } from "@/components/ui";
 import { postHref, typeListRoute } from "@/lib/site";
-import type { LocalizedPost } from "@/lib/types";
+import type { LocalizedPost, RichDoc } from "@/lib/types";
 import { ArticleBody, Byline, ReportTools, Toc } from "../article-parts";
 
-export function DefaultArticle({ lang, post, related, latest }: { lang: Locale; post: LocalizedPost; related: LocalizedPost[]; latest: LocalizedPost[] }) {
+export function DefaultArticle({ lang, post, related, latest, premium }: { lang: Locale; post: LocalizedPost; related: LocalizedPost[]; latest: LocalizedPost[]; premium?: RichDoc | null }) {
   const d = getDict(lang);
   const place = post.t.place || post.t.kicker || post.category.name[lang];
   return (
@@ -44,7 +44,7 @@ export function DefaultArticle({ lang, post, related, latest }: { lang: Locale; 
             <ReportTools lang={lang} post={post} />
           </div>
           <div className="mt-10 max-w-[68ch]">
-            <ArticleBody lang={lang} post={post} dropcap={post.type === "kose"} />
+            <ArticleBody lang={lang} post={post} dropcap={post.type === "kose"} premium={premium} />
           </div>
         </div>
 

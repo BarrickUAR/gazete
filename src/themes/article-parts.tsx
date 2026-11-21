@@ -6,7 +6,7 @@ import { PrintButton } from "@/components/print-button";
 import { headings, RichText } from "@/components/rich-text";
 import { Share } from "@/components/share";
 import { abs, fmtDate, postHref } from "@/lib/site";
-import type { LocalizedPost } from "@/lib/types";
+import type { LocalizedPost, RichDoc } from "@/lib/types";
 
 export function Byline({ lang, post, onDark = false }: { lang: Locale; post: LocalizedPost; onDark?: boolean }) {
   const d = getDict(lang);
@@ -36,13 +36,22 @@ export function Byline({ lang, post, onDark = false }: { lang: Locale; post: Loc
   );
 }
 
-export function ArticleBody({ lang, post, dropcap = false }: { lang: Locale; post: LocalizedPost; dropcap?: boolean }) {
+/** `premium` yalnız editör önizlemesinde verilir: kilitli devam ödeme duvarı yerine doğrudan gösterilir. */
+export function ArticleBody({ lang, post, dropcap = false, premium }: { lang: Locale; post: LocalizedPost; dropcap?: boolean; premium?: RichDoc | null }) {
   const d = getDict(lang);
   const path = postHref(lang, post);
   return (
     <>
       <RichText doc={post.t.body} className={dropcap ? "dropcap" : ""} />
-      {post.isPremium && <Paywall postId={post.id} lang={lang} path={path} />}
+      {post.isPremium &&
+        (premium !== undefined ? (
+          <div className="mt-8 border-t-2 border-dashed border-accent pt-6">
+            <p className="mb-4 font-ui text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">Önizleme · aboneye özel bölüm</p>
+            {premium ? <RichText doc={premium} /> : <p className="font-ui text-[14px] text-muted">Kilitli devam metni boş.</p>}
+          </div>
+        ) : (
+          <Paywall postId={post.id} lang={lang} path={path} />
+        ))}
       {post.sourceUrl && (
         <aside className="mt-10 border-s-2 border-accent ps-5 font-ui text-[14px] leading-[1.6] text-fg-3">
           {d.common.firstPublished}:{" "}

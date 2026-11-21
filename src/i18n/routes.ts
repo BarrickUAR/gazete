@@ -18,6 +18,7 @@ export const segments = {
   account: { tr: "hesabim", en: "account" },
   category: { tr: "kategori", en: "category" },
   tag: { tr: "etiket", en: "tag" },
+  preview: { tr: "onizleme", en: "preview" },
 } as const;
 
 export type RouteKey = keyof typeof segments;
