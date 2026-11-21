@@ -1,63 +1,238 @@
 @import "tailwindcss";
 
+/* ── Kurumsal kimlik ──────────────────────────────────────────────
+   Ana renkler: mavi + beyaz. Ek renkler: lacivert, kırmızı, krem.
+   Kılavuz: /yonetim/marka */
+:root {
+  --brand-blue: #1f5fbf;
+  --brand-white: #ffffff;
+  --brand-navy: #0f2440;
+  --brand-red: #c4262e;
+  --brand-cream: #f7f4ee;
+  --brand-ink: #1b1d22;
+}
+
+/* ── Tema: default (T2 · Muhabir dosyası) ─────────────────────── */
+.t-default {
+  --bg: #0c0c0b;
+  --bg-2: #141413;
+  --bg-3: #121211;
+  --fg: #ece7df;
+  --fg-2: #d3cdc3;
+  --fg-3: #bdb7ad;
+  --muted: #a39d93;
+  --line: rgb(255 255 255 / 0.1);
+  --line-2: rgb(255 255 255 / 0.2);
+  --accent: #d23a2f;
+  --accent-fg: #ffffff;
+  --head: #ece7df;
+  --invert-bg: #ece7df;
+  --invert-fg: #0c0c0b;
+  --ff-display: var(--f-bod), var(--f-naskh), Georgia, serif;
+  --ff-body: var(--f-plex), var(--f-plexar), system-ui, sans-serif;
+  --ff-label: var(--f-cond), var(--f-plexar), system-ui, sans-serif;
+  --ff-mono: var(--f-mono), var(--f-plexar), ui-monospace, monospace;
+  --ff-ui: var(--f-plex), var(--f-plexar), system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+/* ── Tema: foreign (T8 · Analiz dergisi, Dış Haberler) ────────── */
+.t-foreign {
+  --bg: #f7f4ee;
+  --bg-2: #ffffff;
+  --bg-3: #efeae1;
+  --fg: #1b1d22;
+  --fg-2: #33363d;
+  --fg-3: #4a4d55;
+  --muted: #6b6f78;
+  --line: #ddd6c9;
+  --line-2: #c9c0b0;
+  --accent: #c4262e;
+  --accent-fg: #ffffff;
+  --head: #0f2440;
+  --invert-bg: #0f2440;
+  --invert-fg: #ffffff;
+  --ff-display: var(--f-lcd), var(--f-naskh), Georgia, serif;
+  --ff-body: var(--f-lct), var(--f-naskh), Georgia, serif;
+  --ff-label: var(--f-fsc), var(--f-plexar), system-ui, sans-serif;
+  --ff-mono: var(--f-ws), var(--f-plexar), system-ui, sans-serif;
+  --ff-ui: var(--f-ws), var(--f-plexar), system-ui, sans-serif;
+  color-scheme: light;
+}
+
+/* Arapça: Latin fontlarda Arapça glif yok → Naskh (başlık/metin) + Plex Arabic (arayüz).
+   Harf aralığı Arapçada harf bağlarını bozar; italik ve büyük harf Arapçada kullanılmaz. */
+[lang="ar"] .t-default,
+[lang="ar"] .t-foreign {
+  --ff-display: var(--f-naskh), serif;
+  --ff-label: var(--f-plexar), sans-serif;
+  --ff-mono: var(--f-plexar), sans-serif;
+  --ff-ui: var(--f-plexar), sans-serif;
+}
+[lang="ar"] .t-default {
+  --ff-body: var(--f-plexar), sans-serif;
+}
+[lang="ar"] .t-foreign {
+  --ff-body: var(--f-naskh), serif;
+}
+[lang="ar"] * {
+  letter-spacing: 0 !important;
+}
+[lang="ar"] .italic {
+  font-style: normal;
+}
+[lang="ar"] .uppercase {
+  text-transform: none;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-bg-3: var(--bg-3);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-head: var(--head);
+  --color-invert: var(--invert-bg);
+  --color-invert-fg: var(--invert-fg);
+  --color-navy: var(--brand-navy);
+  --color-brand: var(--brand-blue);
+  --color-cream: var(--brand-cream);
+  --color-crimson: var(--brand-red);
+  --font-display: var(--ff-display);
+  --font-body: var(--ff-body);
+  --font-label: var(--ff-label);
+  --font-mono: var(--ff-mono);
+  --font-ui: var(--ff-ui);
+}
+
 html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: #ffffff;
-  color: #121212;
+  background: var(--brand-cream);
+  color: var(--brand-ink);
 }
 
 img {
   display: block;
 }
 
+:focus-visible {
+  outline: 2px solid var(--brand-blue);
+  outline-offset: 2px;
+}
+
 .tnum {
   font-variant-numeric: tabular-nums;
 }
-
 .balance {
   text-wrap: balance;
 }
-
 .pretty {
   text-wrap: pretty;
 }
 
-.dropcap::first-letter {
-  float: left;
+.dropcap > p:first-of-type::first-letter {
+  float: inline-start;
   font-size: 4.6em;
   line-height: 0.82;
-  padding: 0.06em 0.09em 0 0;
+  padding-block-start: 0.06em;
+  padding-inline-end: 0.09em;
   font-weight: 500;
-  font-family: var(--f-disp, inherit);
+  font-family: var(--ff-display);
+  color: var(--accent);
+}
+[lang="ar"] .dropcap > p:first-of-type::first-letter {
+  float: none;
+  font-size: inherit;
+  padding: 0;
+  color: inherit;
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+/* Makale gövdesi (RichText) */
+.prose-news {
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--fg-2);
+}
+.prose-news > * + * {
+  margin-top: 1.15em;
+}
+.prose-news h2 {
+  font-family: var(--ff-display);
+  color: var(--head);
+  font-size: 1.65em;
+  line-height: 1.15;
+  font-weight: 500;
+  margin-top: 1.8em;
+}
+.prose-news h3 {
+  font-family: var(--ff-display);
+  color: var(--head);
+  font-size: 1.3em;
+  line-height: 1.2;
+  margin-top: 1.5em;
+}
+.prose-news a {
+  color: var(--head);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose-news a:hover {
+  text-decoration-thickness: 2px;
+}
+.prose-news blockquote {
+  border-inline-start: 2px solid var(--accent);
+  padding-inline-start: 1.25em;
+  font-family: var(--ff-display);
+  font-size: 1.3em;
+  line-height: 1.45;
+  color: var(--head);
+}
+.prose-news ul {
+  list-style: disc;
+  padding-inline-start: 1.3em;
+}
+.prose-news ol {
+  list-style: decimal;
+  padding-inline-start: 1.3em;
+}
+.prose-news li + li {
+  margin-top: 0.35em;
+}
+.prose-news hr {
+  border: 0;
+  border-top: 1px solid var(--line-2);
+  margin-block: 2em;
+}
+.prose-news figcaption {
+  font-family: var(--ff-ui);
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 0.5em;
+}
+.prose-news code {
+  font-family: var(--ff-mono);
+  font-size: 0.9em;
 }
 
-.marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 60s linear infinite;
+/* Mobil menü (details/summary, JS'siz) */
+details.menu > summary {
+  list-style: none;
 }
-
-.marquee:hover {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee {
-    animation: none;
-  }
+details.menu > summary::-webkit-details-marker {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -66,5 +241,12 @@ img {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
   }
 }
